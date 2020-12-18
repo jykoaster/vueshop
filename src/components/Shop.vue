@@ -26,12 +26,7 @@
 export default {
   data: () => ({
     type: 'Hot',
-    cards: [
-      { good_id: '1', name: 'no.1' },
-      { good_id: '2', name: 'no.2' },
-      { good_id: '3', name: 'no.3' },
-      { good_id: '4', name: 'no.4' },
-    ],
+    goods: null,
     socials: [{
         icon: 'mdi-facebook',
         color: 'indigo',
@@ -46,11 +41,31 @@ export default {
       },
     ],
   }),
-  methods:{
-    detailpath(card){
-      this.$router.push('/goods/'+card.good_id) 
+  created: function() {
+    this.$data.goods = [{
+      good_id: '1',
+      name: 'aaa'
+    }, {
+      good_id: '1',
+      name: 'aaa'
+    }, {
+      good_id: '1',
+      name: 'aaa'
+    }, {
+      good_id: '1',
+      name: 'aaa'
+    }]
+  },
+  methods: {
+    detailpath(card) {
+      this.$router.push('/goods/' + card.good_id)
     }
-   
+  },
+  computed: {
+    cards() {
+      console.log(this.goods)
+      return this.goods
+    }
   }
 }
 </script>
