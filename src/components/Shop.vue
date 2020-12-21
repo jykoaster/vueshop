@@ -63,7 +63,6 @@ export default {
   },
   computed: {
     cards() {
-      console.log(this.goods)
       return this.goods
     }
   }
