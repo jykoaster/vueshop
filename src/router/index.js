@@ -17,8 +17,8 @@ export default new Router({
       }
     },
     {
-      name: 'helloworld',
-      path: '/helloworld',
+      name: 'member',
+      path: '/member',
       component: Member,
       meta: {
         title: 'Member'
@@ -33,7 +33,8 @@ export default new Router({
       }
     },
     {
-      path: '/goods/:id',
+      path: '/goods',
+      name:'goods',
       component: Good
     }
   ]
