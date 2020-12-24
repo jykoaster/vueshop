@@ -36,6 +36,7 @@ export default {
       { name: 'Home', path: '/', icon: 'mdi-image' },
       { name: 'member center', path: '/member', icon: 'mdi-view-dashboard' },
       { name: 'Shop', path: '/shop', icon: 'mdi-shopping' },
+      { name:'cart',path:'cart',icon:'mdi-cart'}
     ],
     links: ['mdi-image-filter-vintage', 'mdi-instagram'],
   }),
