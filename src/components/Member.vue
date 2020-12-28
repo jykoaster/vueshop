@@ -1,32 +1,37 @@
 <template>
   <v-main>
     <v-container>
-      <h1>Member Detail</h1>
-      <v-data-table hide-default-footer disable-sort :headers="header1" :items="desserts" class="elevation-1"></v-data-table>
-      <v-data-table hide-default-footer disable-sort :headers="header2" :items="desserts" class="elevation-1"></v-data-table>
-      <v-data-table hide-default-footer disable-sort :headers="header3" :items="desserts" class="elevation-1"></v-data-table>
+      <v-btn elevation="2" color="primary" large>Edit</v-btn>
+      <table>
+        <tr>
+          <td>Member Account</td>
+          <td>{{member.account}}</td>
+        </tr>
+        <tr>
+          <td>Level</td>
+          <td>{{member.level}}</td>
+        </tr>
+        <tr>
+          <td>E-mail</td>
+          <td>{{member.email}}</td>
+        </tr>
+        <tr>
+          <td>Address</td>
+          <td>{{member.address}}</td>
+        </tr>
+      </table>
     </v-container>
   </v-main>
 </template>
 <script>
 export default {
   data: () => ({
-    header1: [{
-      text: 'Member Name',
-      align: 'start',
-      sortable: true,
-      value: 'name'
-    }, ],
-    header2: [{
-      text: 'Level',
-      align: 'start',
-      sortable: true,
-      value: 'level'
-    }, ],
-    desserts: [{
-      name: 'test',
-      level: 'level',
-    }, ],
-  })
+    member: {
+      account: 'member1',
+      level: 'level1',
+      email: 'e-mail1',
+      address: 'address1',
+    },
+  }),
 }
 </script>

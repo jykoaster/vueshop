@@ -6,7 +6,7 @@
         <v-spacer></v-spacer>
         <v-col v-for="(card,a) in cards" :key="a" cols="12" sm="6" md="3">
           <v-hover v-slot:default="{ hover }">
-            <v-card color='black' :elevation="hover ? 24:6" :to="{name:'goods',query:{src:card.src,id:card.good_id}}" >
+            <v-card color='black' :elevation="hover ? 24:6" :to="{name:'goods',query:{src:card.src,id:card.good_id,name:card.name}}" >
               <v-img height="300px">
                 <span class="headline white--text pl-4 pt-4 d-inline-block" v-text="card.name"></span>
               </v-img>
