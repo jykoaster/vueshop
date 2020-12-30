@@ -36,7 +36,6 @@ export default {
          this.GLOBAL.cartitems[this.$data.id]=pushobj
       }
       alert('add success!')
-      console.log(this.GLOBAL.cartitems)
     },
   }
 }

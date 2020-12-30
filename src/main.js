@@ -3,8 +3,11 @@ import App from './App.vue'
 import vuetify from './plugins/vuetify';
 import router from './router';
 import global_ from './components/Global';
+import axios from 'axios'
+import VueAxios from 'vue-axios'
 
 Vue.config.productionTip = false
+Vue.use(VueAxios, axios)
 Vue.prototype.GLOBAL=global_
 router.beforeEach((to, from, next) => {
   if (to.meta.title) {

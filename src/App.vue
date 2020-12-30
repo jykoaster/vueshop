@@ -10,7 +10,9 @@
       <v-app-bar-nav-icon @click="drawer = !drawer,isshow(items)"></v-app-bar-nav-icon>
       <v-toolbar-title>Market</v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-btn elevation="5">Login</v-btn>
+      <v-btn elevation="5" :to="{name:'login'}">
+        Login
+      </v-btn>
     </v-app-bar>
     <v-main>
       <router-view />
@@ -36,7 +38,7 @@ export default {
       { name: 'Home', path: '/', icon: 'mdi-image' },
       { name: 'member center', path: '/member', icon: 'mdi-view-dashboard' },
       { name: 'Shop', path: '/shop', icon: 'mdi-shopping' },
-      { name:'cart',path:'cart',icon:'mdi-cart'}
+      { name: 'cart', path: 'cart', icon: 'mdi-cart' }
     ],
     links: ['mdi-image-filter-vintage', 'mdi-instagram'],
   }),
@@ -51,7 +53,7 @@ export default {
         window.setTimeout(() => {
           el.setAttribute('style', 'display:true')
           el2.setAttribute('style', 'display:true')
-        }, (i + 1) * 200);
+        }, (i + 1) * 100);
       }
     }
   },

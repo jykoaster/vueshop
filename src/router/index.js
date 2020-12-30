@@ -5,6 +5,7 @@ import Member from '@/components/Member';
 import Shop from '@/components/Shop';
 import Good from '@/components/Good';
 import Cart from '@/components/Cart';
+import Login from '@/components/Login';
 Vue.use(Router);
 
 
@@ -36,12 +37,23 @@ export default new Router({
     {
       path: '/goods',
       name:'goods',
-      component: Good
+      component: Good,
+      meta: {
+        title: 'Good'
+      }
     },
     {
       path:'/cart',
       name:'cart',
-      component:Cart
+      component:Cart,
+      meta: {
+        title: 'Cart'
+      }
+    },
+    {
+      path:'/login',
+      name:'login',
+      component:Login
     }
   ]
 })

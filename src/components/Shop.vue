@@ -48,15 +48,15 @@ export default {
       src:'https://i.picsum.photos/id/340/500/300.jpg?hmac=fPw17wmK3S9R_KlVBrEhGAGlcpnViHHon_aY6A7DmTA'
     }, {
       good_id: '2',
-      name: 'aaa',
+      name: 'bbb',
       src:'https://i.picsum.photos/id/340/500/300.jpg?hmac=fPw17wmK3S9R_KlVBrEhGAGlcpnViHHon_aY6A7DmTA'
     }, {
       good_id: '3',
-      name: 'aaa',
+      name: 'ccc',
       src:'https://i.picsum.photos/id/340/500/300.jpg?hmac=fPw17wmK3S9R_KlVBrEhGAGlcpnViHHon_aY6A7DmTA'
     }, {
       good_id: '4',
-      name: 'aaa',
+      name: 'ddd',
       src:'https://i.picsum.photos/id/340/500/300.jpg?hmac=fPw17wmK3S9R_KlVBrEhGAGlcpnViHHon_aY6A7DmTA'
     }]
   },
