@@ -8,7 +8,6 @@ import Cart from '@/components/Cart';
 import Login from '@/components/Login';
 Vue.use(Router);
 
-
 export default new Router({
   routes: [{
       name: 'home',

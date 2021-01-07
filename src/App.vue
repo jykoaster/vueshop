@@ -1,18 +1,26 @@
 <template>
   <v-app id="app">
     <v-navigation-drawer v-model="drawer" app temporary disable-resize-watcher height="50%" bottom>
-      <v-list-item v-for="( item , index ) of items" :to="item.path" :key="index" @focus="focused = true" link>
+      <v-list-item v-for="( item , index ) of items" :to="item.path" :key="index" @focus="focused = true" @click="clear()" link>
         <v-icon :id="'icon'+index" style="display: none">{{ item.icon }}</v-icon>
         <v-list-item-title :id="'lt'+index" style="display: none">{{ item.name }}</v-list-item-title>
       </v-list-item>
     </v-navigation-drawer>
-    <v-app-bar app color='primary lighten-2' height="100%">
+    <v-app-bar app color='primary lighten-2'  hide-on-scroll height="100%">
       <v-app-bar-nav-icon @click="drawer = !drawer,isshow(items)"></v-app-bar-nav-icon>
-      <v-toolbar-title>Market</v-toolbar-title>
+      <v-toolbar-title @click="home()">Market</v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-btn elevation="5" :to="{name:'login'}">
-        Login
-      </v-btn>
+      <div class=mt-auto>
+        <div cols="12" class="d-flex justify-end mt-2">
+          <v-btn elevation="5" :to="{name:'login'}">
+            Login
+          </v-btn>
+        </div>
+        <div cols="12" class="d-flex mt-2">
+          <v-textarea auto-grow label="Search" rows="1" v-model="srch" required></v-textarea>
+          <v-icon class="mb-5" @click="search()">mdi-magnify</v-icon>
+        </div>
+      </div>
     </v-app-bar>
     <v-main>
       <router-view />
@@ -34,6 +42,7 @@ export default {
   data: () => ({
     drawer: null,
     focused: false,
+    srch:'',
     items: [
       { name: 'Home', path: '/', icon: 'mdi-image' },
       { name: 'member center', path: '/member', icon: 'mdi-view-dashboard' },
@@ -55,7 +64,18 @@ export default {
           el2.setAttribute('style', 'display:true')
         }, (i + 1) * 100);
       }
+    },
+    search(){
+      this.$store.dispatch('items/searchitem',this.srch)
+      this.srch=""
+    },
+    clear(){
+      this.$store.dispatch('items/clear')
+    },
+    home(){
+      this.$router.push('/')
     }
   },
 }
 </script>
+

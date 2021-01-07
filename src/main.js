@@ -5,6 +5,8 @@ import router from './router';
 import global_ from './components/Global';
 import axios from 'axios'
 import VueAxios from 'vue-axios'
+import store from './store'
+
 
 Vue.config.productionTip = false
 Vue.use(VueAxios, axios)
@@ -21,5 +23,6 @@ new Vue({
   components: { App },
   template: "<App/>",
   vuetify,
+  store,
   render: h => h(App)
 }).$mount('#app')
