@@ -39,7 +39,8 @@ const mutations = {
   setItems(state, items) {
     state.all = items
   },
-  setsrchitems(items) {
+  setsrchitems(state,items) {
+    console.log(items)
     state.search = items
   },
   clearall(state) {
