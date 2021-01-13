@@ -15,6 +15,12 @@ router.beforeEach((to, from, next) => {
   if (to.meta.title) {
     document.title = to.meta.title
   }
+  if (to.name == 'member') {
+    if (!cookie.gettoken()) {
+      alert('Not login.Please login')
+      next('login')
+    }
+  }
   next()
 })
 
@@ -34,13 +40,14 @@ axios.interceptors.request.use(
 axios.interceptors.response.use(
   (response) => {
     if (response.data && response.status == 200 && response.config.url == '/api/v1/login') {
-      let jwttoken = response.data['result'].token
+      let jwttoken = response.data.result.token
       cookie.settoken(jwttoken)
       store.commit('user/SET_login', jwttoken)
     }
     if (response.data && response.status == 200 && response.config.url == '/api/v1/logout') {
       cookie.removetoken()
-      store.commit('user/SET_login', '')
+      store.commit('user/LOGOUT', '')
+      router.replace('/')
     }
     return response
   },

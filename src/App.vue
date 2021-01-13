@@ -25,7 +25,7 @@
       </div>
     </v-navigation-drawer>
 
-    <v-app-bar app color="primary lighten-2" hide-on-scroll height="100%">
+    <v-app-bar app color="primary lighten-2" hide-on-scroll>
       <v-app-bar-nav-icon class="d-md-none" @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
       <v-toolbar-title class="ml-5" @click="home()">Market</v-toolbar-title>
       <v-spacer></v-spacer>
@@ -35,34 +35,46 @@
           <v-btn-toggle v-for="(item, index) of items" :key="index" tile group>
             <v-btn :to="item.path" @click="clear()">
               <span>{{ item.name }}</span>
-              <v-icon right>
+              <!-- <v-icon right>
                 {{ item.icon }}
-              </v-icon>
+              </v-icon> -->
             </v-btn>
           </v-btn-toggle>
         </div>
+      </div>
+      <template v-slot:extension>
         <!-- not login -->
-        <div v-if="!islogin">
-          <div class="d-flex justify-end mt-2">
-            <v-btn elevation="5" class="mr-2" :to="{ name: 'register' }">
+        <v-row class="d-flex justify-end" v-if="!islogin">
+          <div class="d-flex  mt-5">
+            <v-btn text class="mr-2" :to="{ name: 'register' }">
               Register
             </v-btn>
-            <v-btn elevation="5" :to="{ name: 'login' }">
+            <v-btn text class="mr-2" :to="{ name: 'login' }">
               Login
             </v-btn>
-          </div>
-          <div class="d-flex mt-2">
+            <!-- </div>
+          <div class="d-flex mt-2"> -->
             <v-textarea auto-grow label="Search" rows="1" v-model="srch" required></v-textarea>
             <v-icon class="mb-5" @click="search()">mdi-magnify</v-icon>
           </div>
-        </div>
+        </v-row>
         <!-- islogin -->
-        <div v-if="islogin">
-          <v-btn elevation="5" class="mr-2" @click="logout()">
-            Logout
-          </v-btn>
-        </div>
-      </div>
+        <v-row class="d-flex justify-end" v-if="islogin">
+          <div class="d-flex  mt-5">
+            <v-btn text class="mr-2" :to="{ name: 'member' }">
+              Member Center
+            </v-btn>
+            <v-btn text class="mr-2" @click="logout()">
+              Logout
+            </v-btn>
+            <v-btn text class="mr-2" :to="{ name: 'cart' }">
+              Cart
+            </v-btn>
+            <v-textarea auto-grow label="Search" rows="1" v-model="srch" required></v-textarea>
+            <v-icon class="mb-5" @click="search()">mdi-magnify</v-icon>
+          </div>
+        </v-row>
+      </template>
     </v-app-bar>
     <v-main>
       <router-view />
@@ -88,12 +100,7 @@ export default {
     drawer: null,
     focused: false,
     srch: '',
-    items: [
-      { name: 'Home', path: '/', icon: 'mdi-image' },
-      { name: 'member center', path: '/member', icon: 'mdi-view-dashboard' },
-      { name: 'Shop', path: '/shop', icon: 'mdi-shopping' },
-      { name: 'cart', path: 'cart', icon: 'mdi-cart' },
-    ],
+    items: [{ name: 'New' }, { name: 'Hot' }, { name: 'Man' }, { name: 'Woman' }],
     links: ['mdi-image-filter-vintage', 'mdi-instagram'],
   }),
   // mounted: function() {

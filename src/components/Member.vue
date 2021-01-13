@@ -23,10 +23,6 @@
           <td>Address</td>
           <td>{{ member.address }}</td>
         </tr>
-        <tr>
-          <td>Token</td>
-          <td>{{ member.token }}</td>
-        </tr>
       </table>
     </v-container>
   </v-main>
@@ -36,7 +32,15 @@ import { mapState } from 'vuex'
 import Vue from 'vue'
 export default {
   created: function() {
-    Vue.axios.post()
+    Vue.axios
+      .get('/api/v1/auth')
+      .then((response) => {
+        let data = response.data.result
+        this.$store.dispatch('user/getdata', data)
+      })
+      .catch((error) => {
+        alert(error)
+      })
   },
   computed: mapState({
     member: (state) => {

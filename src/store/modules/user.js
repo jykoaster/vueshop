@@ -42,7 +42,7 @@ const mutations = {
     state.email = ''
     state.phone = ''
     state.address = ''
-    // state.token = ''
+    state.token = ''
   },
 }
 
