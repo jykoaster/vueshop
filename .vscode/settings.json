@@ -1,0 +1,14 @@
+{
+  "tabnine.experimentalAutoImports": true,
+  "editor.formatOnSave": true,
+  "prettier.singleQuote": true,
+  "prettier.semi": false,
+  "prettier.printWidth": 120,
+  "editor.rulers": [80, 120],
+  "prettier.trailingComma": "es5",
+  "editor.tabSize": 2,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  }
+}
