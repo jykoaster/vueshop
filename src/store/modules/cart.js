@@ -6,7 +6,7 @@ const getters = {
   getcartitems: (state, getter, rootState) => {
     console.log(state.cartitems)
     let tmp = [];
-    state.cartitems.forEach((cartitem) => {
+      state.cartitems.forEach((cartitem) => {
 
       const allitems = rootState.items.all.find(item => item.good_id == cartitem.id)
       if (allitems) {

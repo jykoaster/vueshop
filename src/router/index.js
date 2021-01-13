@@ -7,6 +7,7 @@ import Good from '@/components/Good'
 import Cart from '@/components/Cart'
 import Login from '@/components/Login'
 import Register from '@/components/Register'
+import notfound from '@/components/404'
 Vue.use(Router)
 
 export default new Router({
@@ -60,6 +61,14 @@ export default new Router({
       path: '/register',
       name: 'register',
       component: Register,
+    },
+    {
+      path: '*',
+      component: notfound,
+      name: 'notfound',
+      meta: {
+        title: '404-頁面丟了',
+      },
     },
   ],
 })

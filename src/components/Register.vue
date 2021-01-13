@@ -4,6 +4,7 @@
       <v-form ref="form">
         <v-text-field v-model="acc" label="Account" required></v-text-field>
         <v-text-field v-model="pwd" type="password" label="Password" required></v-text-field>
+        <v-text-field v-model="pwdchk" type="password" label="Password Confirm" required></v-text-field>
         <v-text-field v-model="username" label="Username" required></v-text-field>
         <v-text-field v-model="phone" label="Phone" required></v-text-field>
         <v-text-field v-model="email" label="E-mail" required></v-text-field>
@@ -20,6 +21,7 @@ export default {
   data: () => ({
     acc: '',
     pwd: '',
+    pwdchk: '',
     username: '',
     phone: '',
     email: '',
@@ -29,17 +31,21 @@ export default {
       const param = {
         account: this.acc,
         password: this.pwd,
-        username: this.username,
+        password_confirmation: this.pwdchk,
+        name: this.username,
         phone: this.phone,
         email: this.email,
       }
       vue.axios
         .post('/api/v1/register', param)
-        .then(() => {
+        .then((response) => {
+          console.log(response.data)
           alert('success')
+          this.$router.push('/')
         })
         .catch((error) => {
-          alert(error.response.data.error)
+          console.log(error.error)
+          alert(error.error)
         })
     },
   },

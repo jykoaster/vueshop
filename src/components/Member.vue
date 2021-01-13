@@ -23,28 +23,24 @@
           <td>Address</td>
           <td>{{ member.address }}</td>
         </tr>
+        <tr>
+          <td>Token</td>
+          <td>{{ member.token }}</td>
+        </tr>
       </table>
     </v-container>
   </v-main>
 </template>
 <script>
 import { mapState } from 'vuex'
+import Vue from 'vue'
 export default {
-  // data: () => ({
-  //   member: {
-  //     account: 'member1',
-  //     level: 'level1',
-  //     email: 'e-mail1',
-  //     address: 'address1',
-  //   },
-  // }),
   created: function() {
-    this.$store.dispatch('user/getdata')
+    Vue.axios.post()
   },
   computed: mapState({
     member: (state) => {
-      console.log(state.user.userdata)
-      return state.user.userdata[0]
+      return state.user
     },
   }),
 }

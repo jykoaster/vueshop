@@ -5,7 +5,7 @@
         <v-text-field v-model="acc" label="Account" required></v-text-field>
         <v-text-field v-model="pwd" type="password" label="Password" required></v-text-field>
         <v-text-field v-model="cap" label="Captcha" required></v-text-field>
-        <v-img :src="img" @click="captcha()"></v-img>
+        <v-img style="width:20%" :src="img" @click="captcha()"></v-img>
         <v-btn color="success" class="mr-4" @click="login()">
           Login
         </v-btn>
@@ -17,8 +17,8 @@
 import Vue from 'vue'
 export default {
   data: () => ({
-    acc: '',
-    pwd: '',
+    acc: 'jytest',
+    pwd: 'password',
     cap: '',
     key: '',
     img: null,
@@ -28,19 +28,31 @@ export default {
   },
   methods: {
     login() {
-      Vue.axios.post('/api/v1/login', { account: this.acc, password: this.pwd, captcha: this.cap, key: this.key }).then(() => {
-        alert('success')
-      }).catch((error) => {
-        alert(error.response.data.error)
-      })
+      let param = {
+        account: this.acc,
+        password: this.pwd,
+        captcha: this.cap,
+        key: this.key,
+      }
+      Vue.axios
+        .post('/api/v1/login', param)
+        .then(() => {
+          // const token = response.data['result']['token']
+          // this.$store.dispatch('user/settoken', token)
+
+          alert('success')
+          this.$router.push('/')
+        })
+        .catch((error) => {
+          alert(error)
+        })
     },
     captcha() {
-      Vue.axios.get('/api/v1/captcha/math').then((response) => {
+      Vue.axios.get('/api/v1/captcha').then((response) => {
         this.img = response.data.img
         this.key = response.data.key
       })
     },
-
-  }
+  },
 }
 </script>

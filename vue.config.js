@@ -1,17 +1,13 @@
 module.exports = {
-  "transpileDependencies": [
-    "vuetify"
-  ],
+  transpileDependencies: ['vuetify'],
   devServer: {
     proxy: {
       '/api/v1': {
-        target: 'http://10.1.0.12',
+        target: 'http://192.168.96.166:8090',
         ws: true,
-        changeOrigin: true
+        changeOrigin: true,
       },
-    }
+    },
   },
-  publicPath: process.env.NODE_ENV === 'production'
-    ? '/vueshop/'
-    : '/'
+  publicPath: process.env.NODE_ENV === 'production' ? '/vueshop/' : '/',
 }
