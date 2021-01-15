@@ -33,29 +33,35 @@
       <!-- mobile nav icon -->
       <v-app-bar-nav-icon class="d-md-none" @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
       <!-- mobile nav icon end-->
-      <v-menu offset-y v-for="(category, index) of categorys" :key="index" min-width="100%" max-height="50%">
-        <template v-slot:activator="{ on, attrs }">
-          <div class="d-none d-md-flex">
-            <div class="mr-5 mt-5 d-flex">
-              <!-- <v-btn-toggle group> -->
+      <div class="d-none d-md-flex">
+        <div class="mr-5 mt-5 d-flex">
+          <v-btn text v-for="option of options" :key="option.name" @click="clear()">
+            <span>{{ option.name }}</span>
+          </v-btn>
+          <v-menu offset-y v-for="(category, index) of categorys" :key="index" min-width="100%" max-height="50%">
+            <template v-slot:activator="{ on, attrs }">
               <v-btn text v-on="on" v-bind="attrs" @click="clear()">
                 <span>{{ category.name }}</span>
               </v-btn>
-              <!-- </v-btn-toggle> -->
-            </div>
-          </div>
-        </template>
-        <v-list class="d-flex">
-          <v-list-item class="d-block mt-5" v-for="(cate, index) in category.child" :key="index">
-            <h1>{{ cate.name }}</h1>
-            <v-list class="mt-5">
-              <v-list-item v-for="(cate3, index) in cate.child" :key="index">
-                <v-list-item-title>{{ cate3.name }}</v-list-item-title>
+            </template>
+            <v-list class="d-flex">
+              <v-list-item
+                class="d-block mt-5"
+                v-for="(cate2, index) in category.child"
+                :key="index"
+                @click="gotocate()"
+              >
+                <h1>{{ cate2.name }}</h1>
+                <v-list class="mt-5">
+                  <v-list-item v-for="(cate3, index) in cate2.child" :key="index" @click="gotocate()">
+                    <v-list-item-title>{{ cate3.name }}</v-list-item-title>
+                  </v-list-item>
+                </v-list>
               </v-list-item>
             </v-list>
-          </v-list-item>
-        </v-list>
-      </v-menu>
+          </v-menu>
+        </div>
+      </div>
       <!-- extension content -->
       <template v-slot:extension>
         <!-- not login -->
@@ -66,6 +72,9 @@
             </v-btn>
             <v-btn text class="mr-2" :to="{ name: 'login' }">
               Login
+            </v-btn>
+            <v-btn text class="mr-2" :to="{ name: 'cart' }">
+              Cart
             </v-btn>
             <v-textarea auto-grow label="Search" rows="1" v-model="srch" required></v-textarea>
             <v-icon class="mb-5" @click="search()">mdi-magnify</v-icon>
@@ -110,6 +119,7 @@ import Vue from 'vue'
 import { mapState } from 'vuex'
 export default {
   data: () => ({
+    options: [{ name: 'NEWS' }],
     drawer: null,
     srch: '',
     links: ['mdi-image-filter-vintage', 'mdi-instagram'],
@@ -137,6 +147,9 @@ export default {
     },
     home() {
       this.$router.push('/')
+    },
+    gotocate() {
+      this.$router.push('/shop')
     },
   },
   computed: {
