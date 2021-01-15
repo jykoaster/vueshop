@@ -37,14 +37,11 @@ export default {
       Vue.axios
         .post('/api/v1/login', param)
         .then(() => {
-          // const token = response.data['result']['token']
-          // this.$store.dispatch('user/settoken', token)
-
           alert('success')
           this.$router.push('/')
         })
         .catch((error) => {
-          alert(error)
+          alert(error.error)
         })
     },
     captcha() {

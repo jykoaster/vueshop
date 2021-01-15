@@ -1,13 +1,13 @@
 <template>
   <v-app id="app">
     <!-- mobile nav -->
-    <v-navigation-drawer v-model="drawer" app temporary disable-resize-watcher height="40%" bottom>
-      <div>
-        <v-list-item v-for="(item, index) of items" :to="item.path" :key="index" @click="clear()" link>
-          <v-icon>{{ item.icon }}</v-icon>
-          <v-list-item-title>{{ item.name }}</v-list-item-title>
+    <v-navigation-drawer v-model="drawer" app temporary height="40%" bottom>
+      <v-list>
+        <v-list-item v-for="(category, index) of categorys" :to="category.path" :key="index" @click="clear()" link>
+          <v-icon>{{ category.icon }}</v-icon>
+          <v-list-item-title>{{ category.name }}</v-list-item-title>
         </v-list-item>
-      </div>
+      </v-list>
       <!-- not login -->
       <div v-if="!islogin">
         <v-btn text block class="mbloginfield" color="primary" :to="{ name: 'login' }">
@@ -24,27 +24,42 @@
         </v-btn>
       </div>
     </v-navigation-drawer>
+    <!-- mobile nav end -->
 
-    <v-app-bar app color="primary lighten-2" hide-on-scroll>
-      <v-app-bar-nav-icon class="d-md-none" @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
+    <!-- pc toolbar -->
+    <v-app-bar app color="primary lighten-2">
       <v-toolbar-title class="ml-5" @click="home()">Market</v-toolbar-title>
       <v-spacer></v-spacer>
-      <!-- pc nav -->
-      <div class="d-none d-md-flex">
-        <div class="mr-5 mt-5">
-          <v-btn-toggle v-for="(item, index) of items" :key="index" tile group>
-            <v-btn :to="item.path" @click="clear()">
-              <span>{{ item.name }}</span>
-              <!-- <v-icon right>
-                {{ item.icon }}
-              </v-icon> -->
-            </v-btn>
-          </v-btn-toggle>
-        </div>
-      </div>
+      <!-- mobile nav icon -->
+      <v-app-bar-nav-icon class="d-md-none" @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
+      <!-- mobile nav icon end-->
+      <v-menu offset-y v-for="(category, index) of categorys" :key="index" min-width="100%" max-height="50%">
+        <template v-slot:activator="{ on, attrs }">
+          <div class="d-none d-md-flex">
+            <div class="mr-5 mt-5 d-flex">
+              <!-- <v-btn-toggle group> -->
+              <v-btn text v-on="on" v-bind="attrs" @click="clear()">
+                <span>{{ category.name }}</span>
+              </v-btn>
+              <!-- </v-btn-toggle> -->
+            </div>
+          </div>
+        </template>
+        <v-list class="d-flex">
+          <v-list-item class="d-block mt-5" v-for="(cate, index) in category.child" :key="index">
+            <h1>{{ cate.name }}</h1>
+            <v-list class="mt-5">
+              <v-list-item v-for="(cate3, index) in cate.child" :key="index">
+                <v-list-item-title>{{ cate3.name }}</v-list-item-title>
+              </v-list-item>
+            </v-list>
+          </v-list-item>
+        </v-list>
+      </v-menu>
+      <!-- extension content -->
       <template v-slot:extension>
         <!-- not login -->
-        <v-row class="d-flex justify-end" v-if="!islogin">
+        <v-row class="d-none d-md-flex justify-end" v-if="!islogin">
           <div class="d-flex  mt-5">
             <v-btn text class="mr-2" :to="{ name: 'register' }">
               Register
@@ -52,8 +67,6 @@
             <v-btn text class="mr-2" :to="{ name: 'login' }">
               Login
             </v-btn>
-            <!-- </div>
-          <div class="d-flex mt-2"> -->
             <v-textarea auto-grow label="Search" rows="1" v-model="srch" required></v-textarea>
             <v-icon class="mb-5" @click="search()">mdi-magnify</v-icon>
           </div>
@@ -76,6 +89,7 @@
         </v-row>
       </template>
     </v-app-bar>
+    <!-- pc toolbar end -->
     <v-main>
       <router-view />
     </v-main>
@@ -94,41 +108,17 @@
 <script>
 import Vue from 'vue'
 import { mapState } from 'vuex'
-
 export default {
   data: () => ({
     drawer: null,
-    focused: false,
     srch: '',
-    items: [{ name: 'New' }, { name: 'Hot' }, { name: 'Man' }, { name: 'Woman' }],
     links: ['mdi-image-filter-vintage', 'mdi-instagram'],
   }),
-  // mounted: function() {
-  //   if (jwttoken) {
-  //     this.$data.islogin = true
-  //   } else {
-  //     this.$data.islogin = false
-  //   }
-  // },
+  created: function() {
+    this.$store.dispatch('category/getallcategorys')
+  },
   methods: {
-    // isshow(items) {
-    //   let length = items.length
-    //   for (let i = 0; i <= length - 1; i++) {
-    //     let el = document.querySelector('#icon' + i)
-    //     let el2 = document.querySelector('#lt' + i)
-    //     el.setAttribute('style', 'display:none')
-    //     el2.setAttribute('style', 'display:none')
-    //     window.setTimeout(() => {
-    //       el.setAttribute('style', 'display:true')
-    //       el2.setAttribute('style', 'display:true')
-    //     }, (i + 1) * 100)
-    //   }
-    // },
     logout() {
-      // let jwttoken = this.$store.state.user.token
-      // let param = {
-      //   Authorization: jwttoken,
-      // }
       Vue.axios
         .post('/api/v1/logout')
         .then(() => {
@@ -149,16 +139,20 @@ export default {
       this.$router.push('/')
     },
   },
-  computed: mapState({
-    islogin: (state) => {
-      console.log(state.user.token)
-      if (state.user.token != '') {
-        return true
-      } else {
-        return false
-      }
-    },
-  }),
+  computed: {
+    ...mapState({
+      islogin: (state) => {
+        if (state.user.token != '') {
+          return true
+        } else {
+          return false
+        }
+      },
+      categorys: (state) => {
+        return state.category.categorys
+      },
+    }),
+  },
 }
 </script>
 <style scoped>
