@@ -3,6 +3,7 @@ const state = () => ({
   // userdata: {},
   account: '',
   username: '',
+  birth: '',
   level: '',
   email: '',
   address: '',
@@ -14,6 +15,10 @@ const actions = {
   getdata({ commit }, data) {
     commit('SET_data', data)
   },
+  changedata({ commit }, data) {
+    console.log(commit)
+    console.log(data)
+  },
   settoken({ commit }, token) {
     commit('SET_token', token)
   },
@@ -24,12 +29,11 @@ const actions = {
 
 const mutations = {
   SET_login(state, token) {
-    console.log(token)
     state.token = token
   },
   SET_data(state, data) {
     state.account = data.account
-    state.username = data.username
+    state.username = data.name
     state.level = data.level
     state.email = data.email
     state.phone = data.phone

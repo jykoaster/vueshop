@@ -16,7 +16,7 @@
   </v-main>
 </template>
 <script>
-import vue from 'vue'
+import { register } from '@/api/request'
 export default {
   data: () => ({
     acc: '',
@@ -36,17 +36,11 @@ export default {
         phone: this.phone,
         email: this.email,
       }
-      vue.axios
-        .post('/api/v1/register', param)
-        .then((response) => {
-          console.log(response.data)
-          alert('success')
-          this.$router.push('/')
-        })
-        .catch((error) => {
-          console.log(error.error)
-          alert(error.error)
-        })
+      let res = register(param)
+      console.log(res)
+      if (res == 'success') {
+        this.$router.push('/')
+      }
     },
   },
 }

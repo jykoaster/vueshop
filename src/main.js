@@ -10,13 +10,6 @@ import cookie from './api/cookie'
 
 Vue.config.productionTip = false
 Vue.use(VueAxios, axios)
-// Vue.prototype.GLOBAL = global_
-router.beforeEach((to, from, next) => {
-  if (to.meta.title) {
-    document.title = to.meta.title
-  }
-  next()
-})
 
 axios.interceptors.request.use(
   (config) => {
@@ -37,10 +30,14 @@ axios.interceptors.response.use(
       let jwttoken = response.data.result.token
       cookie.settoken(jwttoken)
       store.commit('user/SET_login', jwttoken)
+      router.replace('/')
     }
     if (response.data && response.status == 200 && response.config.url == '/api/v1/logout') {
       cookie.removetoken()
       store.commit('user/LOGOUT', '')
+      router.replace('/')
+    }
+    if (response.data && response.status == 200 && response.config.url == '/api/v1/register') {
       router.replace('/')
     }
     return response
@@ -51,8 +48,9 @@ axios.interceptors.response.use(
         case 401:
           cookie.removetoken()
           store.commit('user/SET_login', '')
+          alert('Please Login!')
           router.replace({
-            path: '/',
+            path: '/login',
           })
       }
     }

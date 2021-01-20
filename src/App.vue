@@ -4,41 +4,39 @@
     <v-navigation-drawer v-model="drawer" app temporary height="40%" bottom>
       <v-list>
         <v-list-item v-for="(category, index) of categorys" :to="category.path" :key="index" @click="clear()" link>
-          <v-icon>{{ category.icon }}</v-icon>
           <v-list-item-title>{{ category.name }}</v-list-item-title>
         </v-list-item>
       </v-list>
-      <!-- not login -->
-      <div v-if="!islogin">
-        <v-btn text block class="mbloginfield" color="primary" :to="{ name: 'login' }">
-          Login
-        </v-btn>
-        <v-btn text block class="mbloginfield mt-2" color="primary" :to="{ name: 'register' }">
-          Register
-        </v-btn>
-      </div>
-      <!-- islogin -->
-      <div v-if="islogin">
-        <v-btn text block class="mbloginfield mt-2" color="primary" @click="logout()">
-          Logout
-        </v-btn>
-      </div>
     </v-navigation-drawer>
     <!-- mobile nav end -->
 
     <!-- pc toolbar -->
     <v-app-bar app color="primary lighten-2">
-      <v-toolbar-title class="ml-5" @click="home()">Market</v-toolbar-title>
+      <v-toolbar-title class="ml-5" style="cursor:pointer" @click="home()">Market</v-toolbar-title>
       <v-spacer></v-spacer>
-      <!-- mobile nav icon -->
+      <!-- mobile toolbar -->
+      <v-row class="d-md-none justify-end">
+        <div v-for="(op, index) in useroptions" :key="index">
+          <v-btn icon :to="`${op.path}`">
+            <v-icon text class="mr-2">{{ op.icon }}</v-icon>
+          </v-btn>
+        </div>
+      </v-row>
       <v-app-bar-nav-icon class="d-md-none" @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
-      <!-- mobile nav icon end-->
+      <!-- mobile toolbar end-->
       <div class="d-none d-md-flex">
         <div class="mr-5 mt-5 d-flex">
           <v-btn text v-for="option of options" :key="option.name" @click="clear()">
             <span>{{ option.name }}</span>
           </v-btn>
-          <v-menu offset-y v-for="(category, index) of categorys" :key="index" min-width="100%" max-height="50%">
+          <v-menu
+            class="listposition"
+            offset-y
+            v-for="(category, index) of categorys"
+            :key="index"
+            min-width="100%"
+            max-height="50%"
+          >
             <template v-slot:activator="{ on, attrs }">
               <v-btn text v-on="on" v-bind="attrs" @click="clear()">
                 <span>{{ category.name }}</span>
@@ -46,14 +44,19 @@
             </template>
             <v-list class="d-flex">
               <v-list-item
-                class="d-block mt-5"
+                class="d-block mt-5 listposition"
                 v-for="(cate2, index) in category.child"
                 :key="index"
                 @click="gotocate()"
               >
                 <h1>{{ cate2.name }}</h1>
                 <v-list class="mt-5">
-                  <v-list-item v-for="(cate3, index) in cate2.child" :key="index" @click="gotocate()">
+                  <v-list-item
+                    class="listposition"
+                    v-for="(cate3, index) in cate2.child"
+                    :key="index"
+                    @click="gotocate()"
+                  >
                     <v-list-item-title>{{ cate3.name }}</v-list-item-title>
                   </v-list-item>
                 </v-list>
@@ -62,36 +65,16 @@
           </v-menu>
         </div>
       </div>
+
       <!-- extension content -->
-      <template v-slot:extension>
-        <!-- not login -->
-        <v-row class="d-none d-md-flex justify-end" v-if="!islogin">
+      <template v-slot:extension class="d-none">
+        <v-row class="d-none d-md-flex justify-end">
           <div class="d-flex  mt-5">
-            <v-btn text class="mr-2" :to="{ name: 'register' }">
-              Register
-            </v-btn>
-            <v-btn text class="mr-2" :to="{ name: 'login' }">
-              Login
-            </v-btn>
-            <v-btn text class="mr-2" :to="{ name: 'cart' }">
-              Cart
-            </v-btn>
-            <v-textarea auto-grow label="Search" rows="1" v-model="srch" required></v-textarea>
-            <v-icon class="mb-5" @click="search()">mdi-magnify</v-icon>
-          </div>
-        </v-row>
-        <!-- islogin -->
-        <v-row class="d-flex justify-end" v-if="islogin">
-          <div class="d-flex  mt-5">
-            <v-btn text class="mr-2" :to="{ name: 'member' }">
-              Member Center
-            </v-btn>
-            <v-btn text class="mr-2" @click="logout()">
-              Logout
-            </v-btn>
-            <v-btn text class="mr-2" :to="{ name: 'cart' }">
-              Cart
-            </v-btn>
+            <div v-for="(op, index) in useroptions" :key="index">
+              <v-btn text class="mr-2" :to="`${op.path}`">
+                {{ op.name }}
+              </v-btn>
+            </div>
             <v-textarea auto-grow label="Search" rows="1" v-model="srch" required></v-textarea>
             <v-icon class="mb-5" @click="search()">mdi-magnify</v-icon>
           </div>
@@ -115,10 +98,20 @@
   </v-app>
 </template>
 <script>
-import Vue from 'vue'
 import { mapState } from 'vuex'
 export default {
   data: () => ({
+    allusertags: [
+      [
+        { name: 'Login', path: '/login', icon: 'mdi-account' },
+        { name: 'Cart', path: '/cart', icon: 'mdi-cart' },
+      ],
+      [
+        { name: 'Member', path: '/member', icon: 'mdi-account' },
+        { name: 'Logout', path: '/logout', icon: 'mdi-logout' },
+        { name: 'Cart', path: '/cart', icon: 'mdi-cart' },
+      ],
+    ],
     options: [{ name: 'NEWS' }],
     drawer: null,
     srch: '',
@@ -128,16 +121,6 @@ export default {
     this.$store.dispatch('category/getallcategorys')
   },
   methods: {
-    logout() {
-      Vue.axios
-        .post('/api/v1/logout')
-        .then(() => {
-          alert('Logout Success')
-        })
-        .catch((error) => {
-          alert(error.error)
-        })
-    },
     search() {
       this.$store.dispatch('items/searchitem', this.srch)
       this.srch = ''
@@ -146,21 +129,21 @@ export default {
       this.$store.dispatch('items/clear')
     },
     home() {
-      this.$router.push('/')
+      this.$router.push('/').catch(() => {})
     },
     gotocate() {
-      this.$router.push('/shop')
+      this.$router.push('/shop').catch(() => {})
     },
   },
   computed: {
+    useroptions() {
+      if (this.$store.state.user.token == '') {
+        return this.$data.allusertags[0]
+      } else {
+        return this.$data.allusertags[1]
+      }
+    },
     ...mapState({
-      islogin: (state) => {
-        if (state.user.token != '') {
-          return true
-        } else {
-          return false
-        }
-      },
       categorys: (state) => {
         return state.category.categorys
       },
@@ -172,5 +155,8 @@ export default {
 .mbloginfield {
   border-bottom: 1px solid;
   border-top: 1px solid;
+}
+.listposition {
+  position: static;
 }
 </style>

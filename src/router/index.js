@@ -8,9 +8,10 @@ import Cart from '@/components/Cart'
 import Login from '@/components/Login'
 import Register from '@/components/Register'
 import notfound from '@/components/404'
+import request from '@/api/request'
 Vue.use(Router)
 
-export default new Router({
+const router = new Router({
   routes: [
     {
       name: 'home',
@@ -63,6 +64,10 @@ export default new Router({
       component: Register,
     },
     {
+      path: '/logout',
+      name: 'logout',
+    },
+    {
       path: '*',
       component: notfound,
       name: 'notfound',
@@ -72,3 +77,14 @@ export default new Router({
     },
   ],
 })
+router.beforeEach((to, from, next) => {
+  if (to.meta.title) {
+    document.title = to.meta.title
+  }
+  if (to.path == '/logout') {
+    request.logout()
+  }
+  next()
+})
+
+export default router

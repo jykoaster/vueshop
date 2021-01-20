@@ -14,7 +14,7 @@
   </v-main>
 </template>
 <script>
-import Vue from 'vue'
+import { login, captcha } from '@/api/request'
 export default {
   data: () => ({
     acc: 'jytest',
@@ -23,8 +23,10 @@ export default {
     key: '',
     img: null,
   }),
-  mounted: function() {
-    this.captcha()
+  async mounted() {
+    let data = await captcha()
+    this.img = data.img
+    this.key = data.key
   },
   methods: {
     login() {
@@ -34,21 +36,12 @@ export default {
         captcha: this.cap,
         key: this.key,
       }
-      Vue.axios
-        .post('/api/v1/login', param)
-        .then(() => {
-          alert('success')
-          this.$router.push('/')
-        })
-        .catch((error) => {
-          alert(error.error)
-        })
+      login(param)
     },
-    captcha() {
-      Vue.axios.get('/api/v1/captcha').then((response) => {
-        this.img = response.data.img
-        this.key = response.data.key
-      })
+    async captcha() {
+      let data = await captcha()
+      this.img = data.img
+      this.key = data.key
     },
   },
 }
