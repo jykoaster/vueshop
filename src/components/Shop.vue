@@ -8,7 +8,7 @@
             <v-card
               color="black"
               :elevation="hover ? 24 : 6"
-              :to="{ name: 'goods', query: { src: card.img400, id: card.good_id, name: card.name } }"
+              :to="{ name: 'goods', query: { src: card.src, id: card.good_id, name: card.name } }"
             >
               <v-img height="300px" :src="card.src">
                 <span class="headline white--text pl-4 pt-4 d-inline-block" v-text="card.name"></span>
@@ -48,18 +48,10 @@ export default {
       },
     ],
   }),
-  created: function() {
-    if (this.$store.state.items.search.length == 0) {
-      this.$store.dispatch('items/getallitems')
-    }
-  },
+
   computed: mapState({
     cards: (state) => {
-      if (state.items.search.length == 0) {
-        return state.items.all
-      } else {
-        return state.items.search
-      }
+      return state.items.search
     },
   }),
 }

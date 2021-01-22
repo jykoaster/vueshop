@@ -1,24 +1,23 @@
 <template>
-  <div>
-    <v-container>
-      <v-card flat class="d-sm-flex justify-center">
-        <v-card style="width:500px">
-          <v-img lazy-src :src="src" />
-        </v-card>
-        <v-card style="width:500px">
-          <div class="pt-10">
-            <v-card-title>{{ name }}</v-card-title>
-            <v-card-subtitle>Item Detail</v-card-subtitle>
-            <v-card-text>Some amazing function</v-card-text>
-          </div>
-          <div class="d-flex mt-10 justify-center align-self-end">
-            <v-btn @click="addcart()">add to cart</v-btn>
-            <v-btn @click="back()" class="ml-2">back</v-btn>
-          </div>
-        </v-card>
-      </v-card>
-    </v-container>
-  </div>
+  <v-container>
+    <div class="text-h6">item category....</div>
+    <v-row class="justify-center">
+      <v-col class="ma-md-10" cols="md-4">
+        <v-img lazy-src :src="src" />
+      </v-col>
+      <v-col class="ma-md-10">
+        <v-col>
+          <v-card-title class="text-h3 font-weight-medium mb-5">{{ name }}</v-card-title>
+          <v-card-subtitle>Item Detail</v-card-subtitle>
+          <v-card-text>Some amazing function</v-card-text>
+        </v-col>
+        <v-col class="mt-10" cols="8">
+          <v-btn text block outlined tile class="mb-5" @click="addcart()">add to cart</v-btn>
+          <v-btn text block outlined tile @click="back()">back</v-btn>
+        </v-col>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 <script>
 export default {

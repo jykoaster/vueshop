@@ -22,17 +22,9 @@
             <v-text-field single-line v-model="member.birth" label="Birth" outlined></v-text-field>
           </v-col>
           <v-col cols="6">
-            Gender
-            <v-radio-group row v-model="member.gender">
-              <v-radio label="Male" value="Male"></v-radio>
-              <v-radio label="Female" value="Female"></v-radio>
-            </v-radio-group>
-          </v-col>
-          <v-col cols="6">
             Phone
             <v-text-field single-line v-model="member.phone" label="Phone" outlined></v-text-field>
           </v-col>
-
           <v-col cols="6">
             E-mail
             <v-text-field single-line v-model="member.email" label="E-mail" outlined></v-text-field>
@@ -81,10 +73,3 @@ export default {
   },
 }
 </script>
-<style scoped>
-.formborder {
-  border: 1px solid;
-  border-radius: 5px;
-  border-color: rgba(0, 0, 0, 0.26);
-}
-</style>

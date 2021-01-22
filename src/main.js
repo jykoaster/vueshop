@@ -7,6 +7,7 @@ import axios from 'axios'
 import VueAxios from 'vue-axios'
 import store from './store'
 import cookie from './api/cookie'
+import '../public/css/global.css'
 
 Vue.config.productionTip = false
 Vue.use(VueAxios, axios)

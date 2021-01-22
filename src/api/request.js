@@ -17,7 +17,7 @@ export function login(param) {
       alert('success')
     })
     .catch((error) => {
-      alert(error.message)
+      alert(error.error)
     })
 }
 export function captcha() {

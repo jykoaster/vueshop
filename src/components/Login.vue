@@ -1,16 +1,26 @@
 <template>
   <v-main>
-    <v-container>
-      <v-form ref="form">
-        <v-text-field v-model="acc" label="Account" required></v-text-field>
-        <v-text-field v-model="pwd" type="password" label="Password" required></v-text-field>
-        <v-text-field v-model="cap" label="Captcha" required></v-text-field>
-        <v-img style="width:20%" :src="img" @click="captcha()"></v-img>
-        <v-btn color="success" class="mr-4" @click="login()">
-          Login
-        </v-btn>
-      </v-form>
-    </v-container>
+    <v-form ref="form">
+      <v-container class="text-center">
+        <div class="text-h2 font-weight-medium">Login</div>
+        <v-row class="justify-center ">
+          <v-col cols="md-4" class="formborder pa-10 ma-5">
+            <v-text-field v-model="acc" label="Account" required></v-text-field>
+            <v-text-field v-model="pwd" type="password" label="Password" required></v-text-field>
+            <v-text-field v-model="cap" label="Captcha" required></v-text-field>
+            <v-col cols="7">
+              <v-img :src="img" @click="captcha()"></v-img>
+            </v-col>
+            <v-btn block color="success" class="mb-2" @click="login()">
+              Login
+            </v-btn>
+            <v-btn block color="primary" :to="`/register`">
+              Register
+            </v-btn>
+          </v-col>
+        </v-row>
+      </v-container>
+    </v-form>
   </v-main>
 </template>
 <script>
