@@ -1,4 +1,5 @@
-import category from '@/api/category'
+// import category from '@/api/category'
+// import { getallcategorys } from '@/api/request'
 
 const state = () => ({
   categorys: [],
@@ -9,9 +10,9 @@ const mutations = {
   },
 }
 const actions = {
-  getallcategorys({ commit }) {
-    commit('SET_CATEGORY', category.getcategory())
-  },
+  // getallcategorys({ commit }, data) {
+  //   commit('SET_CATEGORY', data)
+  // },
 }
 export default {
   namespaced: true,

@@ -7,7 +7,7 @@ import axios from 'axios'
 import VueAxios from 'vue-axios'
 import store from './store'
 import cookie from './api/cookie'
-import '../public/css/global.css'
+import '../public/css/global.scss'
 
 Vue.config.productionTip = false
 Vue.use(VueAxios, axios)
@@ -47,12 +47,16 @@ axios.interceptors.response.use(
     if (error.response) {
       switch (error.response.status) {
         case 401:
+          store.commit('user/LOGOUT', '')
           cookie.removetoken()
           store.commit('user/SET_login', '')
-          alert('Please Login!')
-          router.replace({
-            path: '/login',
-          })
+
+          if (error.response.config.url != '/api/v1/login') {
+            alert('Please Login!')
+            router.replace({
+              path: '/login',
+            })
+          }
       }
     }
     return Promise.reject(error.response.data)

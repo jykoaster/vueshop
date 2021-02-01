@@ -1,20 +1,19 @@
+import category from '@/api/category'
 const state = () => ({
   cartitems: [],
 })
 
 const getters = {
-  getcartitems: (state, getter, rootState) => {
-    console.log(state.cartitems)
+  getcartitems: (state) => {
     let tmp = []
+    const getallitems = category.getallitems()
     state.cartitems.forEach((cartitem) => {
-      const allitems = rootState.items.all.find((item) => item.good_id == cartitem.id)
+      const allitems = getallitems.find((item) => item.good_id == cartitem.id)
       if (allitems) {
         let pushdata = { id: cartitem.id, count: cartitem.count, name: allitems.name }
-
         tmp.push(pushdata)
       }
     })
-    console.log(tmp)
     return tmp
   },
 }
@@ -44,7 +43,6 @@ const mutations = {
   },
   deleteitem(state, id) {
     const cartitem = state.cartitems.findIndex((item) => item.id == id)
-    console.log(cartitem)
     state.cartitems.splice(cartitem, 1)
   },
 }

@@ -1,0 +1,107 @@
+@mixin pc {
+  @media (min-width: 960px) {
+    @content;
+  }
+}
+@mixin mobile {
+  @media (max-width: 960px) {
+    @content;
+  }
+}
+body {
+  background-color: #fff;
+}
+#nav-drawer {
+  z-index: 3;
+}
+#navbar {
+  position: fixed;
+  top: 0px;
+  width: 100%;
+  z-index: 2;
+  background-color: #fff;
+  border-bottom: 1px solid #e5e5e5;
+  @include pc {
+    height: 123px;
+  }
+  @include mobile {
+    height: 70px;
+  }
+}
+#wrap-nav {
+  @include pc {
+    height: 123px;
+  }
+  @include mobile {
+    height: 70px;
+  }
+}
+
+.menuhover:hover {
+  background: rgba(112, 112, 112, 0.26);
+}
+#area2 {
+  background-color: #e0e0e0;
+  overflow: hidden;
+  height: 300px;
+}
+#area2 > div {
+  margin-top: 5rem;
+  margin-bottom: 2rem;
+}
+#area2 > span {
+  @include pc {
+    margin: 5rem 1rem 5rem 1rem;
+  }
+  @include mobile {
+    display: block;
+  }
+}
+
+#area3 > .v-card {
+  border-radius: 0px;
+
+  @include pc {
+    width: 50%;
+  }
+  @include mobile {
+    width: 100%;
+  }
+}
+
+.img-hover-style {
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.5);
+  width: 100%;
+  height: 100%;
+}
+.show-btns {
+  border: 2px solid #ffffff;
+  color: #ffffff !important;
+}
+.show-btns:hover {
+  background-color: #ffffff;
+  color: #000000 !important;
+}
+#area4 > .v-card {
+  width: 100%;
+}
+.formborder {
+  border: 1px solid;
+  border-radius: 5px;
+  border-color: rgba(0, 0, 0, 0.26);
+}
+.listposition {
+  position: static;
+}
+.titlecursor {
+  cursor: pointer;
+}
+.roundimg {
+  border-radius: 50%;
+}
+.roundimg:hover {
+  border: 1px solid;
+  border-radius: 50%;
+}

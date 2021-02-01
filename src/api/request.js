@@ -23,7 +23,6 @@ export function login(param) {
 export function captcha() {
   return new Promise(function(resolve) {
     Vue.axios.get('/api/v1/captcha').then((response) => {
-      console.log(response.status)
       resolve(response.data)
     })
   })
@@ -49,10 +48,19 @@ export function register(param) {
   })
 }
 
+export function getallcategorys() {
+  return new Promise(function(resolve) {
+    Vue.axios.get('/api/v1/category').then((response) => {
+      resolve(response.data.result)
+    })
+  })
+}
+
 export default {
   logout,
   login,
   captcha,
   member,
   register,
+  getallcategorys,
 }

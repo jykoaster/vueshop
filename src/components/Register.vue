@@ -40,9 +40,9 @@ export default {
         name: this.username,
         phone: this.phone,
         email: this.email,
+        group_id: '1', //for api require
       }
       let res = register(param)
-      console.log(res)
       if (res == 'success') {
         this.$router.push('/')
       }
