@@ -1,27 +1,21 @@
 import router from '@/router'
 import category from '@/api/category'
 import items from '@/api/items'
-//shape [{good_id:good_id,name:name,src:src},...]
+import { getproducts } from '@/api/request'
 const state = () => ({
   all: [],
   search: [],
   detail: {},
+  cateid: '',
   // route: '',
 })
 
 const actions = {
-  getitems({ commit }, param) {
-    let obj = null
-    // let route = ''
-    if (param.cate3) {
-      obj = category.getitems(param.cate1.id, param.cate2.id, param.cate3.id)
-      // route = param.cate1.name + '/' + param.cate2.name + '/' + param.cate3.name
-    } else {
-      obj = category.getitems(param.cate1.id, param.cate2.id)
-      // route = param.cate1.name + '/' + param.cate2.name
-    }
-    commit('setsrchitems', obj)
-    // commit('setroute', route)
+  async getitems({ commit }, param) {
+    let data = await getproducts(param.id, param.page)
+    commit('setsrchitems', data)
+    commit('setCateid', param.id)
+    router.push('/shop').catch(() => {})
   },
   searchitem({ commit }, keyword) {
     let items = category.getallitems()
@@ -49,6 +43,9 @@ const actions = {
 }
 
 const mutations = {
+  setCateid(state, id) {
+    state.cateid = id
+  },
   setItems(state, items) {
     state.all = items
   },

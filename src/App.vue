@@ -144,6 +144,7 @@ export default {
         { name: 'Cart', path: '/cart', icon: 'mdi-cart' },
       ],
       [
+        { name: 'Admin', path: '/admin', icon: ' mdi-account-circle' },
         { name: 'Member', path: '/member', icon: 'mdi-account' },
         { name: 'Logout', path: '/logout', icon: 'mdi-logout' },
         { name: 'Cart', path: '/cart', icon: 'mdi-cart' },
@@ -168,17 +169,10 @@ export default {
       this.$router.push('/').catch(() => {})
     },
     gotocate(id) {
-      // callapi...
-      console.log(id)
-
-      //   let param = {
-      //     cate1: cate1,
-      //     cate2: cate2,
-      //     cate3: cate3,
-      //   }
-      //   this.$store.dispatch('items/getitems', param)
-      //   this.$data.drawer = false
-      //   this.$router.push('/shop').catch(() => {})
+      let param = {
+        id: id,
+      }
+      this.$store.dispatch('items/getitems', param)
     },
   },
   computed: {

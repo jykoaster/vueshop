@@ -3,21 +3,24 @@
     <v-container class="grey lighten-4" fluid v-show="cards[0] != 'nores'">
       <v-subheader>item route...</v-subheader>
       <v-row class="justify-center">
-        <v-col v-for="(card, a) in cards" :key="a" cols="12" sm="6" md="3">
+        <v-col v-for="(card, a) in cards.data" :key="a" cols="12" sm="6" md="3">
           <v-hover v-slot:default="{ hover }">
-            <v-card color="black" :elevation="hover ? 24 : 6" :to="{ name: 'goods', query: { id: card.good_id } }">
+            <v-card color="black" :elevation="hover ? 24 : 6" :to="{ name: 'goods', query: { id: card.uuid } }">
               <v-img height="300px" :src="card.src">
                 <span class="headline white--text pl-4 pt-4 d-inline-block" v-text="card.name"></span>
               </v-img>
+
               <v-card-actions class="white justify-center">
-                <v-btn v-for="(social, i) in socials" :key="i" :color="social.color" class="white--text" fab icon small>
-                  <v-icon>{{ social.icon }}</v-icon>
-                </v-btn>
+                <v-card-text>特價{{ card.price }}</v-card-text>
               </v-card-actions>
             </v-card>
           </v-hover>
         </v-col>
       </v-row>
+      <div class="text-center">
+        <!-- <v-pagination v-model="cards.links" :length="cards.last_page" @click="changepage"></v-pagination> -->
+        <v-btn v-for="(v, i) in cards.links" :key="i" @click="changepage(v.label)">{{ v.label }}</v-btn>
+      </div>
     </v-container>
     <v-container v-show="cards[0] == 'nores'">
       no search items
@@ -42,14 +45,24 @@ export default {
         color: 'red lighten-3',
       },
     ],
+    cateid: '',
   }),
-  computed: mapState({
-    cards: (state) => {
-      return state.items.search
+  props: ['id'],
+  computed: {
+    ...mapState({
+      cards: (state) => {
+        return state.items.search
+      },
+    }),
+  },
+  methods: {
+    changepage(page) {
+      let param = {
+        id: this.$store.state.items.cateid,
+        page: page,
+      }
+      this.$store.dispatch('items/getitems', param)
     },
-    // route: (state) => {
-    //   return state.items.route
-    // },
-  }),
+  },
 }
 </script>

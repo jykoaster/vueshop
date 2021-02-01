@@ -6,6 +6,8 @@ import Shop from '@/components/Shop'
 import Good from '@/components/Good'
 import Cart from '@/components/Cart'
 import Login from '@/components/Login'
+import Admin from '@/components/admin/Admin'
+import Setcategory from '@/components/admin/Category'
 import Register from '@/components/Register'
 import notfound from '@/components/404'
 import request from '@/api/request'
@@ -66,6 +68,15 @@ const router = new Router({
     {
       path: '/logout',
       name: 'logout',
+    },
+    {
+      path: '/admin',
+      component: Admin,
+      redirect: '/admin/category',
+      children: [
+        { path: 'category', name: 'Setcategory', component: Setcategory },
+        { path: 'items', name: 'Setitems', component: Cart },
+      ],
     },
     {
       path: '*',

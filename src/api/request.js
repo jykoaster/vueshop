@@ -55,6 +55,23 @@ export function getallcategorys() {
     })
   })
 }
+export function getproducts(uuid, page) {
+  console.log(page)
+  return new Promise(function(resolve) {
+    Vue.axios.get('/api/v1/product/' + uuid, { params: { page: page } }).then((response) => {
+      console.log(response.data.result)
+      resolve(response.data.result)
+    })
+  })
+}
+
+export function getcategory1() {
+  return new Promise(function(resolve) {
+    Vue.axios.get('/api/v1/category1').then((response) => {
+      resolve(response.data.result)
+    })
+  })
+}
 
 export default {
   logout,
@@ -63,4 +80,5 @@ export default {
   member,
   register,
   getallcategorys,
+  getproducts,
 }
