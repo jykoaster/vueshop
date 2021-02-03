@@ -10,7 +10,7 @@ import Admin from '@/components/admin/Admin'
 import Setcategory from '@/components/admin/Category'
 import Register from '@/components/Register'
 import notfound from '@/components/404'
-import request from '@/api/request'
+import { logout } from '@/api/request'
 Vue.use(Router)
 
 const router = new Router({
@@ -93,7 +93,7 @@ router.beforeEach((to, from, next) => {
     document.title = to.meta.title
   }
   if (to.path == '/logout') {
-    request.logout()
+    logout()
   }
   next()
 })

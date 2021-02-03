@@ -36,6 +36,7 @@ axios.interceptors.response.use(
     if (response.data && response.status == 200 && response.config.url == '/api/v1/logout') {
       cookie.removetoken()
       store.commit('user/LOGOUT', '')
+      store.commit('cart/LOGOUT', '')
       router.replace('/')
     }
     if (response.data && response.status == 200 && response.config.url == '/api/v1/register') {
@@ -48,6 +49,7 @@ axios.interceptors.response.use(
       switch (error.response.status) {
         case 401:
           store.commit('user/LOGOUT', '')
+          store.commit('cart/LOGOUT', '')
           cookie.removetoken()
           store.commit('user/SET_login', '')
 

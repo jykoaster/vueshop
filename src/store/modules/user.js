@@ -1,6 +1,5 @@
-// import User from '@/api/user'
+import { login, captcha, member, register } from '@/api/request'
 const state = () => ({
-  // userdata: {},
   account: '',
   username: '',
   birth: '',
@@ -12,16 +11,28 @@ const state = () => ({
 })
 
 const actions = {
-  getdata({ commit }, data) {
+  login(a, param) {
+    login(param)
+  },
+  captcha() {
+    let data = captcha()
+    return data
+  },
+  register(a, param) {
+    let data = register(param)
+    return data
+  },
+  async getdata({ commit }) {
+    let data = await member()
     commit('SET_data', data)
   },
   changedata({ commit }, data) {
     console.log(commit)
     console.log(data)
   },
-  settoken({ commit }, token) {
-    commit('SET_token', token)
-  },
+  // settoken({ commit }, token) {
+  //   commit('SET_token', token)
+  // },
   logout({ commit }) {
     commit('LOGOUT')
   },

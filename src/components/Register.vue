@@ -21,7 +21,6 @@
   </v-main>
 </template>
 <script>
-import { register } from '@/api/request'
 export default {
   data: () => ({
     acc: '',
@@ -42,7 +41,7 @@ export default {
         email: this.email,
         group_id: '1', //for api require
       }
-      let res = register(param)
+      let res = this.$store.dispatch('user/register', param)
       if (res == 'success') {
         this.$router.push('/')
       }

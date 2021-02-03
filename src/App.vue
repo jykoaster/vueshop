@@ -135,7 +135,6 @@
 </template>
 <script>
 import { mapState } from 'vuex'
-import { getallcategorys } from '@/api/request'
 export default {
   data: () => ({
     allusertags: [
@@ -155,9 +154,8 @@ export default {
     srch: '',
     links: ['mdi-image-filter-vintage', 'mdi-instagram'],
   }),
-  async mounted() {
-    let data = await getallcategorys()
-    this.$store.commit('category/SET_CATEGORY', data)
+  mounted: function() {
+    this.$store.dispatch('category/getallcategorys')
   },
   methods: {
     search() {

@@ -46,11 +46,9 @@
 </template>
 <script>
 import { mapState } from 'vuex'
-import { member } from '@/api/request'
 export default {
-  async mounted() {
-    let data = await member()
-    this.$store.dispatch('user/getdata', data)
+  mounted: function() {
+    this.$store.dispatch('user/getdata')
   },
   computed: mapState({
     member: (state) => {

@@ -24,7 +24,6 @@
   </v-main>
 </template>
 <script>
-import { login, captcha } from '@/api/request'
 export default {
   data: () => ({
     acc: 'jytest',
@@ -34,9 +33,7 @@ export default {
     img: null,
   }),
   async mounted() {
-    let data = await captcha()
-    this.img = data.img
-    this.key = data.key
+    await this.captcha()
   },
   methods: {
     login() {
@@ -46,10 +43,10 @@ export default {
         captcha: this.cap,
         key: this.key,
       }
-      login(param)
+      this.$store.dispatch('user/login', param)
     },
     async captcha() {
-      let data = await captcha()
+      let data = await this.$store.dispatch('user/captcha')
       this.img = data.img
       this.key = data.key
     },

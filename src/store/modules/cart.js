@@ -1,55 +1,35 @@
-import category from '@/api/category'
+import { getcartitems, addcartitem, deletecartitem } from '@/api/request'
 const state = () => ({
   cartitems: [],
 })
 
-const getters = {
-  getcartitems: (state) => {
-    let tmp = []
-    const getallitems = category.getallitems()
-    state.cartitems.forEach((cartitem) => {
-      const allitems = getallitems.find((item) => item.good_id == cartitem.id)
-      if (allitems) {
-        let pushdata = { id: cartitem.id, count: cartitem.count, name: allitems.name }
-        tmp.push(pushdata)
-      }
-    })
-    return tmp
-  },
-}
-
 const actions = {
-  additems({ state, commit }, chosenitem) {
-    const cartid = state.cartitems.find((item) => item.id == chosenitem.id)
-    if (!cartid) {
-      commit('newitem', chosenitem.id)
-    } else {
-      commit('addcount', cartid)
-    }
+  async getcartitems({ commit }) {
+    let data = await getcartitems()
+    commit('setitem', data)
   },
-  ditem({ commit }, id) {
-    commit('deleteitem', id)
+  async additems(a, data) {
+    await addcartitem(data)
+  },
+  async ditem({ commit }, id) {
+    await deletecartitem(id)
+    let data = await getcartitems()
+    commit('setitem', data)
   },
 }
 
 const mutations = {
-  newitem(state, id) {
-    let pushdata = { id: id, count: 1 }
-    state.cartitems.push(pushdata)
+  setitem(state, data) {
+    state.cartitems = data
   },
-  addcount(state, { id }) {
-    const cartitem = state.cartitems.find((item) => item.id == id)
-    cartitem.count++
-  },
-  deleteitem(state, id) {
-    const cartitem = state.cartitems.findIndex((item) => item.id == id)
-    state.cartitems.splice(cartitem, 1)
+
+  LOGOUT(state) {
+    state.cartitems = []
   },
 }
 export default {
   namespaced: true,
   state,
   mutations,
-  getters,
   actions,
 }

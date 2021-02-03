@@ -1,13 +1,11 @@
 import router from '@/router'
 import category from '@/api/category'
-import items from '@/api/items'
-import { getproducts } from '@/api/request'
+import { getproducts, getitemdetail } from '@/api/request'
 const state = () => ({
   all: [],
   search: [],
   detail: {},
   cateid: '',
-  // route: '',
 })
 
 const actions = {
@@ -33,8 +31,8 @@ const actions = {
     commit('setsrchitems', searchres)
     router.push('/shop').catch(() => {})
   },
-  getitemdetail({ commit }, id) {
-    const detail = items.detail(id)
+  async getitemdetail({ commit }, id) {
+    const detail = await getitemdetail(id)
     commit('setdetail', detail)
   },
   clear({ commit }) {
