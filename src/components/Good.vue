@@ -1,9 +1,9 @@
 <template>
-  <v-container>
+  <v-container id="goodpage">
     <div class="text-h6">{{ route }}</div>
     <v-row class="justify-center">
       <v-col class="ma-md-10" md="4" cols="12">
-        <v-img lazy-src :src="src" />
+        <v-img height="100%" lazy-src :src="require(`../assets/images/home_area5_1.png`)" />
       </v-col>
       <v-col class="ma-md-10">
         <v-col>
@@ -13,11 +13,11 @@
             <v-card-text class="text-decoration-line-through">原價:{{ item.suggested_price }}</v-card-text>
             <v-card-text class="pt-0">特價:{{ item.price }}</v-card-text>
           </div>
-          <v-col class="d-flex" cols="4">
+          <v-col class="d-flex" cols="3">
             <v-btn outlined tile icon height="56" @click="chcount('decrease')">
               <v-icon>mdi-chevron-left</v-icon>
             </v-btn>
-            <v-text-field v-model="count" solo flat tile outlined></v-text-field>
+            <input v-model="count" />
             <v-btn outlined tile icon height="56" @click="chcount('add')">
               <v-icon>mdi-chevron-right</v-icon>
             </v-btn>
@@ -34,9 +34,9 @@
             @click="changeimg(img)"
           />
         </v-col>
-        <v-col class="mt-10" md="8" cols="12">
-          <v-btn text block outlined tile class="mb-5" @click="addcart(item.uuid)">add to cart</v-btn>
-          <v-btn text block outlined tile @click="back">back</v-btn>
+        <v-col class="mt-10  d-md-flex" md="8" cols="12" id="itemevent">
+          <v-btn text outlined tile class="mr-5 mb-5" @click="addcart(item.uuid)">加入購物車</v-btn>
+          <v-btn text outlined tile @click="back">立即購買</v-btn>
         </v-col>
       </v-col>
     </v-row>
@@ -52,10 +52,6 @@ export default {
     count: 1,
     route: '',
   }),
-  mounted: function() {
-    // this.id = this.$route.query.id
-    // this.$store.dispatch('items/getitemdetail', this.$route.query.id)
-  },
   methods: {
     back() {
       this.$router.go(-1)

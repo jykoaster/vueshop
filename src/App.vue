@@ -166,11 +166,13 @@ export default {
     home() {
       this.$router.push('/').catch(() => {})
     },
-    gotocate(id) {
+    async gotocate(id) {
       let param = {
         id: id,
+        page: 1,
       }
-      this.$store.dispatch('items/getitems', param)
+      await this.$store.dispatch('items/getitems', param)
+      this.$router.push('/shop').catch(() => {})
     },
   },
   computed: {

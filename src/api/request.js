@@ -35,6 +35,23 @@ export function member() {
     })
   })
 }
+
+export function changedata(name, phone, email) {
+  let data = qs.stringify({
+    name: name,
+    phone: phone,
+    email: email,
+  })
+  return new Promise(function(resolve) {
+    Vue.axios.put('/api/v1/user_information', data).then((response) => {
+      if (response.data.result) {
+        alert('修改成功')
+      }
+      resolve(response.data.result)
+    })
+  })
+}
+
 export function register(param) {
   return new Promise(function() {
     Vue.axios

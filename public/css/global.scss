@@ -1,3 +1,4 @@
+$pricecolor: #ee4d2d;
 @mixin pc {
   @media (min-width: 960px) {
     @content;
@@ -107,4 +108,32 @@ body {
 }
 #cateadmin .v-icon {
   margin-right: 1rem;
+}
+#goodpage input {
+  border: 1px solid;
+  text-align: center;
+}
+.price {
+  color: $pricecolor;
+}
+
+#itemevent .v-btn {
+  @include pc {
+    flex: auto;
+  }
+  @include mobile {
+    min-width: 100% !important;
+  }
+}
+
+#setitempage .v-select {
+  @include pc {
+    margin-right: 2rem;
+  }
+  @include mobile {
+    margin: 0 1rem 0 1rem;
+  }
+}
+.maxwidthhandle {
+  max-width: 100%;
 }

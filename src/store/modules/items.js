@@ -6,14 +6,18 @@ const state = () => ({
   search: [],
   detail: {},
   cateid: '',
+  page: 1,
 })
 
 const actions = {
   async getitems({ commit }, param) {
     let data = await getproducts(param.id, param.page)
-    commit('setsrchitems', data)
-    commit('setCateid', param.id)
-    router.push('/shop').catch(() => {})
+    if (data.data.length == 0) {
+      data = ['nores']
+    }
+    await commit('setsrchitems', data)
+    await commit('setCateid', param.id)
+    await commit('setpage', param.page)
   },
   searchitem({ commit }, keyword) {
     let items = category.getallitems()
@@ -50,14 +54,14 @@ const mutations = {
   setsrchitems(state, items) {
     state.search = items
   },
-  // setroute(state, route) {
-  //   state.route = route
-  // },
+  setpage(state, page) {
+    state.page = page
+  },
   setdetail(state, data) {
     state.detail = data
   },
   clearall(state) {
-    state.search = []
+    state.search = ['nores']
   },
 }
 

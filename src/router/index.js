@@ -8,6 +8,7 @@ import Cart from '@/components/Cart'
 import Login from '@/components/Login'
 import Admin from '@/components/admin/Admin'
 import Setcategory from '@/components/admin/Category'
+import Setitem from '@/components/admin/Item'
 import Register from '@/components/Register'
 import notfound from '@/components/404'
 import { logout } from '@/api/request'
@@ -75,7 +76,7 @@ const router = new Router({
       redirect: '/admin/category',
       children: [
         { path: 'category', name: 'Setcategory', component: Setcategory },
-        { path: 'items', name: 'Setitems', component: Cart },
+        { path: 'items', name: 'Setitems', component: Setitem },
       ],
     },
     {

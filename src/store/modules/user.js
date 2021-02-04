@@ -1,4 +1,4 @@
-import { login, captcha, member, register } from '@/api/request'
+import { login, captcha, member, register, changedata } from '@/api/request'
 const state = () => ({
   account: '',
   username: '',
@@ -26,13 +26,11 @@ const actions = {
     let data = await member()
     commit('SET_data', data)
   },
-  changedata({ commit }, data) {
-    console.log(commit)
-    console.log(data)
+  async changedata({ commit }, param) {
+    changedata(param.name, param.phone, param.email)
+    let data = await member()
+    commit('SET_data', data)
   },
-  // settoken({ commit }, token) {
-  //   commit('SET_token', token)
-  // },
   logout({ commit }) {
     commit('LOGOUT')
   },
@@ -45,7 +43,7 @@ const mutations = {
   SET_data(state, data) {
     state.account = data.account
     state.username = data.name
-    state.level = data.level
+    state.level = data.level.name
     state.email = data.email
     state.phone = data.phone
     state.address = data.address

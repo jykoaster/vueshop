@@ -5,18 +5,15 @@
         <v-card-title class="headline grey lighten-2">
           更改分類
         </v-card-title>
-        名稱:
-        <v-text-field v-model="catename" :label="catename" placeholder="分類名稱" solo></v-text-field>
-        上層:
-        <v-select
-          v-model="upperid"
-          :items="uppercate"
-          :item-text="uppercatename"
-          item-value="id"
-          label="Standard"
-        ></v-select>
+        <v-col>
+          名稱:
+          <v-text-field v-model="catename" :label="catename" placeholder="分類名稱" solo></v-text-field>
+        </v-col>
+        <v-col v-show="uppercate.length != 0">
+          上層:
+          <v-select v-model="upperid" :items="uppercate" :item-text="uppercatename" item-value="id"></v-select>
+        </v-col>
         <v-divider></v-divider>
-
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn color="primary" text @click="editcategory">
@@ -34,31 +31,34 @@
           新增分類
         </v-card-title>
         <v-checkbox v-model="checkbox" label="只新增在第一層"></v-checkbox>
-        名稱:
-        <v-text-field v-model="catename" placeholder="分類名稱" solo></v-text-field>
-
-        <div v-if="!checkbox">
-          <v-select
-            clearable
-            clear-icon="mdi-close-circle"
-            v-model="cate1id"
-            :items="categorys"
-            item-text="category1_name"
-            item-value="id"
-            label="新增在第一層下"
-          ></v-select>
-        </div>
-        <div v-if="cate1id != null && !checkbox">
-          <v-select
-            clearable
-            clear-icon="mdi-close-circle"
-            v-model="cate2id"
-            :items="allcate2"
-            item-text="category2_name"
-            item-value="id"
-            label="新增在第二層下"
-          ></v-select>
-        </div>
+        <v-col>
+          名稱:
+          <v-text-field v-model="catename" placeholder="分類名稱" solo></v-text-field>
+        </v-col>
+        <v-col>
+          <div v-if="!checkbox">
+            <v-select
+              clearable
+              clear-icon="mdi-close-circle"
+              v-model="cate1id"
+              :items="categorys"
+              item-text="category1_name"
+              item-value="id"
+              label="新增在第一層下"
+            ></v-select>
+          </div>
+          <div v-if="cate1id != null && !checkbox">
+            <v-select
+              clearable
+              clear-icon="mdi-close-circle"
+              v-model="cate2id"
+              :items="allcate2"
+              item-text="category2_name"
+              item-value="id"
+              label="新增在第二層下，不需要則留空"
+            ></v-select>
+          </div>
+        </v-col>
 
         <v-divider></v-divider>
 
