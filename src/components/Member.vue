@@ -19,7 +19,7 @@
           </v-col>
           <v-col cols="6">
             聯絡電話
-            <v-text-field single-line v-model="member.name" :label="member.phone" outlined></v-text-field>
+            <v-text-field single-line v-model="member.phone" :label="member.phone" outlined></v-text-field>
           </v-col>
           <v-col cols="6">
             E-mail
@@ -43,16 +43,9 @@
 <script>
 import { mapState } from 'vuex'
 export default {
-  data: () => ({
-    name: '',
-    phone: '',
-    email: '',
-  }),
+  data: () => ({}),
   mounted: function() {
     this.$store.dispatch('user/getdata')
-    // this.name = member.name
-    // this.phone = member.phone
-    // this.email = member.email
   },
   computed: mapState({
     member: (state) => {

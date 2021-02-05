@@ -1,5 +1,6 @@
 <template>
   <v-container id="cateadmin">
+    <h1>分類管理</h1>
     <v-dialog v-model="editdialog" persistent width="500">
       <v-card>
         <v-card-title class="headline grey lighten-2">
@@ -7,7 +8,15 @@
         </v-card-title>
         <v-col>
           名稱:
-          <v-text-field v-model="catename" :label="catename" placeholder="分類名稱" solo></v-text-field>
+          <v-text-field
+            class="dialoginput"
+            flat
+            dense
+            v-model="catename"
+            :label="catename"
+            placeholder="分類名稱"
+            solo
+          ></v-text-field>
         </v-col>
         <v-col v-show="uppercate.length != 0">
           上層:
@@ -33,7 +42,7 @@
         <v-checkbox v-model="checkbox" label="只新增在第一層"></v-checkbox>
         <v-col>
           名稱:
-          <v-text-field v-model="catename" placeholder="分類名稱" solo></v-text-field>
+          <v-text-field solo flat v-model="catename" placeholder="請輸入分類名稱"></v-text-field>
         </v-col>
         <v-col>
           <div v-if="!checkbox">
@@ -73,7 +82,8 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
-    <v-icon color="blue" large @click="adddialog = true">mdi-plus-circle</v-icon>
+
+    <v-btn class="ma-3" color="primary" large @click="adddialog = true">新增分類</v-btn>
     <v-list-group v-for="(cate1, index) of categorys" :key="index" no-action>
       <template v-slot:activator>
         <v-list-item-content>
@@ -95,8 +105,10 @@
           <v-icon v-on:click.stop="showdialog(2, cate2.id, cate2.category2_name, cate1.id)">mdi-note</v-icon>
         </template>
         <v-list-item v-for="(cate3, index) in cate2.category3" :key="index">
-          <v-icon v-on:click.stop="deletecategory(3, cate3.id)">mdi-delete</v-icon>
-          <v-icon v-on:click.stop="showdialog(3, cate3.id, cate3.category3_name, cate2.id)">mdi-note</v-icon>
+          <v-icon class="deltooltip" v-on:click.stop="deletecategory(3, cate3.id)">mdi-delete</v-icon>
+          <v-icon class="edittooltip" v-on:click.stop="showdialog(3, cate3.id, cate3.category3_name, cate2.id)"
+            >mdi-note</v-icon
+          >
           <v-list-item-content>
             <v-list-item-title v-text="cate3.category3_name"></v-list-item-title>
           </v-list-item-content>
@@ -139,12 +151,15 @@ export default {
 
   methods: {
     deletecategory(level, id) {
-      let levelname = 'category' + level
-      let param = {
-        level: levelname,
-        id: id,
+      let yes = confirm('確定刪除該分類?')
+      if (yes) {
+        let levelname = 'category' + level
+        let param = {
+          level: levelname,
+          id: id,
+        }
+        this.$store.dispatch('category/deletecategory', param)
       }
-      this.$store.dispatch('category/deletecategory', param)
     },
     async showdialog(level, id, name, upperid) {
       this.editdialog = true

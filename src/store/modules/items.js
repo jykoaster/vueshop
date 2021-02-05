@@ -2,7 +2,6 @@ import router from '@/router'
 import category from '@/api/category'
 import { getproducts, getitemdetail } from '@/api/request'
 const state = () => ({
-  all: [],
   search: [],
   detail: {},
   cateid: '',
@@ -13,7 +12,7 @@ const actions = {
   async getitems({ commit }, param) {
     let data = await getproducts(param.id, param.page)
     if (data.data.length == 0) {
-      data = ['nores']
+      data = []
     }
     await commit('setsrchitems', data)
     await commit('setCateid', param.id)
@@ -30,7 +29,7 @@ const actions = {
     })
     let searchres = res.filter((e) => e)
     if (searchres.length == 0) {
-      searchres = ['nores']
+      searchres = []
     }
     commit('setsrchitems', searchres)
     router.push('/shop').catch(() => {})
@@ -48,9 +47,9 @@ const mutations = {
   setCateid(state, id) {
     state.cateid = id
   },
-  setItems(state, items) {
-    state.all = items
-  },
+  // setItems(state, items) {
+  //   state.all = items
+  // },
   setsrchitems(state, items) {
     state.search = items
   },
@@ -61,7 +60,10 @@ const mutations = {
     state.detail = data
   },
   clearall(state) {
-    state.search = ['nores']
+    state.page = 1
+    state.cateid = ''
+    state.detail = {}
+    state.search = []
   },
 }
 

@@ -32,19 +32,21 @@
         <v-btn elevation="2" color="primary" large @click="search">查詢</v-btn>
       </v-col>
     </v-row>
-    <v-row v-show="items[0] != 'nores'">
+    <v-row v-show="items.length != 0">
       <v-list-item class="maxwidthhandle" v-for="(card, a) in items.data" :key="a">
         <div class="mr-5 d-flex">
-          <v-icon class="mr-2" large @click="deleteitem()">mdi-delete</v-icon>
-          <v-icon large @click="showdialog()">mdi-note</v-icon>
+          <v-icon class="mr-2" @click="deleteitem()">mdi-delete</v-icon>
+          <v-icon @click="showdialog()">mdi-note</v-icon>
         </div>
-        <v-list-item-title class="">{{ card.name }}</v-list-item-title>
+        <v-list-item-content class="ml-5">
+          <v-list-item-title>{{ card.name }}</v-list-item-title>
+        </v-list-item-content>
       </v-list-item>
       <div class="text-center">
         <v-pagination v-model="page" :length="items.last_page" v-on:click.native="changepage()"></v-pagination>
       </div>
     </v-row>
-    <v-row v-show="items[0] == 'nores'">
+    <v-row v-show="items.length == 0">
       無商品
     </v-row>
   </v-container>

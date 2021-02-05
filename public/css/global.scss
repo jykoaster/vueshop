@@ -1,4 +1,5 @@
 $pricecolor: #ee4d2d;
+$menubordercolor: #e5e5e5;
 @mixin pc {
   @media (min-width: 960px) {
     @content;
@@ -21,7 +22,7 @@ body {
   width: 100%;
   z-index: 2;
   background-color: #fff;
-  border-bottom: 1px solid #e5e5e5;
+  border-bottom: 1px solid $menubordercolor;
   @include pc {
     height: 123px;
   }
@@ -93,9 +94,13 @@ body {
   border-radius: 5px;
   border-color: rgba(0, 0, 0, 0.26);
 }
-.listposition {
+#menulist {
+  border-bottom: 1px solid $menubordercolor;
+}
+#menulist .v-list-item {
   position: static;
 }
+
 .titlecursor {
   cursor: pointer;
 }
@@ -113,6 +118,13 @@ body {
   border: 1px solid;
   text-align: center;
 }
+
+.dialoginput {
+  max-height: 50px;
+  border: 1px solid;
+  text-align: center;
+}
+
 .price {
   color: $pricecolor;
 }

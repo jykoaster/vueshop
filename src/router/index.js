@@ -9,6 +9,7 @@ import Login from '@/components/Login'
 import Admin from '@/components/admin/Admin'
 import Setcategory from '@/components/admin/Category'
 import Setitem from '@/components/admin/Item'
+import Setuser from '@/components/admin/User'
 import Register from '@/components/Register'
 import notfound from '@/components/404'
 import { logout } from '@/api/request'
@@ -77,6 +78,7 @@ const router = new Router({
       children: [
         { path: 'category', name: 'Setcategory', component: Setcategory },
         { path: 'items', name: 'Setitems', component: Setitem },
+        { path: 'setuser', name: 'Setuser', component: Setuser },
       ],
     },
     {

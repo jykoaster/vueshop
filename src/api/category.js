@@ -222,7 +222,7 @@ export default {
         const res3 = res2.child.find((element) => element.id == cate3)
         if (res3) {
           if (!res3.items || res3.items.length == 0) {
-            return ['nores']
+            return []
           }
           return res3.items
         } else {
@@ -234,7 +234,7 @@ export default {
             }
           })
           if (!pusharray || pusharray.length == 0) {
-            return ['nores']
+            return []
           }
           return pusharray
         }

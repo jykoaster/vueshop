@@ -72,12 +72,12 @@
                   <span>{{ cate1.category1_name }}</span>
                 </v-btn>
               </template>
-              <v-list flat class="d-flex">
-                <v-list-item class="d-block mt-5 listposition" v-for="(cate2, index) in cate1.category2" :key="index">
+              <v-list id="menulist" flat class="d-flex">
+                <v-list-item class="d-block mt-5 " v-for="(cate2, index) in cate1.category2" :key="index">
                   <h1>{{ cate2.category2_name }}</h1>
                   <v-list class="mt-5">
                     <v-list-item
-                      class="listposition menuhover"
+                      class=" menuhover"
                       v-for="(cate3, index) in cate2.category3"
                       :key="index"
                       @click="gotocate(cate3.uuid)"

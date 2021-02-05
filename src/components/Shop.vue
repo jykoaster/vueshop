@@ -1,6 +1,6 @@
 <template>
   <v-card flat tile>
-    <v-container fluid v-show="cards[0] != 'nores'">
+    <v-container fluid v-show="cards.length != 0">
       <v-subheader>item route...</v-subheader>
       <v-row class="justify-center mb-5">
         <v-col v-for="(card, a) in cards.data" :key="a" cols="12" sm="6" md="3">
@@ -19,7 +19,7 @@
         <v-pagination v-model="page" :length="cards.last_page" v-on:click.native="changepage()"></v-pagination>
       </div>
     </v-container>
-    <v-container v-show="cards[0] == 'nores'">
+    <v-container v-show="cards.length == 0">
       no search items
     </v-container>
   </v-card>

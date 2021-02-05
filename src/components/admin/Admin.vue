@@ -10,8 +10,9 @@
 export default {
   data: () => ({
     options: [
-      { name: 'SetCategory', path: 'Setcategory' },
-      { name: 'SetItems', path: 'Setitems' },
+      { name: '分類管理', path: 'Setcategory' },
+      { name: '商品管理', path: 'Setitems' },
+      { name: '會員管理', path: 'Setuser' },
     ],
   }),
 }

@@ -17,7 +17,7 @@ export function login(param) {
       alert('success')
     })
     .catch((error) => {
-      alert(error.message)
+      alert(error.error)
     })
 }
 export function captcha() {
@@ -65,6 +65,56 @@ export function register(param) {
   })
 }
 
+export function getallusers() {
+  return new Promise(function(resolve) {
+    Vue.axios.get('api/v1/user').then((response) => {
+      resolve(response.data.result)
+    })
+  })
+}
+
+export function adduser(account, name, email, group, level, phone) {
+  let data = new FormData()
+  data.append('account', account)
+  data.append('email', email)
+  data.append('name', name)
+  data.append('group_id', group)
+  data.append('phone', phone)
+  data.append('level_id', level)
+  return new Promise(function(resolve) {
+    Vue.axios
+      .post('api/v1/user', data)
+      .then((response) => {
+        resolve(response.data.result)
+      })
+      .catch(() => {
+        alert('新增失敗')
+      })
+  })
+}
+
+export function deleteuser(uuid) {
+  return new Promise(function(resolve) {
+    Vue.axios
+      .delete('api/v1/user/' + uuid)
+      .then((response) => {
+        alert('刪除成功')
+        resolve(response.data.result)
+      })
+      .catch(() => {
+        alert('刪除失敗')
+      })
+  })
+}
+
+export function getallgroup() {
+  return new Promise(function(resolve) {
+    Vue.axios.get('api/v1/dropdown/group').then((response) => {
+      resolve(response.data.result)
+    })
+  })
+}
+
 export function getallcategorys() {
   return new Promise(function(resolve) {
     Vue.axios.get('/api/v1/category').then((response) => {
@@ -107,7 +157,7 @@ export function deletecategory(level, id) {
         resolve(response.data.result)
       })
       .catch((error) => {
-        alert(error.error)
+        alert('刪除失敗')
         resolve(error.error)
       })
   })
@@ -128,7 +178,7 @@ export function editcategory(level, id, name, upperid, paramid, paramname) {
         resolve(response.data.result)
       })
       .catch((error) => {
-        alert(error.error)
+        alert('修改失敗')
         resolve(error.error)
       })
   })
@@ -149,7 +199,7 @@ export function addcategory(level, name, upperid, paramid, paramname) {
         resolve(response.data.result)
       })
       .catch((error) => {
-        alert(error.error)
+        alert('新增失敗')
         resolve(error.error)
       })
   })
