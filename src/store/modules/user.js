@@ -5,14 +5,15 @@ import {
   register,
   changedata,
   getallusers,
-  getallgroup,
+  useradminformdata,
   adduser,
+  edituser,
   deleteuser,
+  resetpassword,
 } from '@/api/request'
 const state = () => ({
   account: '',
   name: '',
-  birth: '',
   level: '',
   email: '',
   address: '',
@@ -20,6 +21,8 @@ const state = () => ({
   token: '',
   alluser: [],
   allgroup: [],
+  alllevel: [],
+  allstatus: [],
 })
 
 const actions = {
@@ -51,27 +54,29 @@ const actions = {
     commit('SET_alluser', data.data)
   },
 
-  async getallgroup({ commit }) {
-    let data = await getallgroup()
-    commit('SET_allgroup', data)
+  async getformdata({ commit }) {
+    let data = await useradminformdata()
+    commit('SET_formdata', data)
   },
 
-  async adduser({ commit }, param) {
-    let account = param.account
-    let name = param.name
-    let email = param.email
-    let group = param.group
-    let level = param.level
-    let phone = param.phone
+  async adduser({ commit }, { account, name, email, group, level, phone }) {
     await adduser(account, name, email, group, level, phone)
     let data = await getallusers()
     commit('SET_alluser', data.data)
   },
-
+  async edituser({ commit }, { account, name, email, group, level, phone, status, uuid }) {
+    await edituser(account, name, email, group, level, phone, status, uuid)
+    let data = await getallusers()
+    commit('SET_alluser', data.data)
+  },
   async deleteuser({ commit }, uuid) {
     await deleteuser(uuid)
     let data = await getallusers()
     commit('SET_alluser', data.data)
+  },
+
+  async resetpassword(a, { group, level, phone, password, uuid }) {
+    await resetpassword(group, level, phone, password, uuid)
   },
 }
 
@@ -79,8 +84,10 @@ const mutations = {
   SET_alluser(state, data) {
     state.alluser = data
   },
-  SET_allgroup(state, data) {
-    state.allgroup = data
+  SET_formdata(state, { level, group, status }) {
+    state.allgroup = group
+    state.alllevel = level
+    state.allstatus = status
   },
   SET_login(state, token) {
     state.token = token
@@ -101,6 +108,10 @@ const mutations = {
     state.phone = ''
     state.address = ''
     state.token = ''
+    state.alluser = []
+    state.allgroup = []
+    state.alllevel = []
+    state.allstatus = []
   },
 }
 

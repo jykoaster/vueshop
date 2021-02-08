@@ -1,14 +1,12 @@
 <template>
-  <v-main>
-    <v-container v-show="items.length != 0" v-for="item in items" :key="item.id">
-      <v-card @click="godetail(item.product_uuid)">
-        <v-card-text class="d-flex justify-space-between">
-          <div class="ml-6">
-            <div>Name: {{ item.product.name }}</div>
-            <div>count:{{ item.number }}</div>
-          </div>
-          <v-btn class="mr-6" @click.stop="ditem(item.id)">delete</v-btn>
-        </v-card-text>
+  <v-main id="cart">
+    <v-container v-show="items.length != 0">
+      <v-card class="d-flex mb-2" v-for="item in items" :key="item.id" flat tile @click="godetail(item.product_uuid)">
+        <v-card-text class="text-align-center"> Name: {{ item.product.name }} </v-card-text>
+        <v-card-text class="text-align-center"> count:{{ item.number }} </v-card-text>
+        <v-cart-actions class="align-self-center">
+          <v-btn text class="mr-6" @click.stop="ditem(item.id)">delete</v-btn>
+        </v-cart-actions>
       </v-card>
     </v-container>
     <v-container v-show="items.length == 0">

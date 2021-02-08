@@ -28,7 +28,7 @@
           <v-btn color="primary" text @click="editcategory">
             儲存
           </v-btn>
-          <v-btn color="error" text @click="hidedialog">
+          <v-btn color="error" text @click="cleardata">
             取消
           </v-btn>
         </v-card-actions>
@@ -76,7 +76,7 @@
           <v-btn color="primary" text @click="addcategory">
             儲存
           </v-btn>
-          <v-btn color="error" text @click="hidedialog">
+          <v-btn color="error" text @click="cleardata">
             取消
           </v-btn>
         </v-card-actions>
@@ -206,9 +206,6 @@ export default {
         level: level,
       }
       this.$store.dispatch('category/addcategory', param)
-      this.cleardata()
-    },
-    hidedialog() {
       this.cleardata()
     },
     cleardata() {

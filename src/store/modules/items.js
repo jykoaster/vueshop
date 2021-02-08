@@ -47,9 +47,6 @@ const mutations = {
   setCateid(state, id) {
     state.cateid = id
   },
-  // setItems(state, items) {
-  //   state.all = items
-  // },
   setsrchitems(state, items) {
     state.search = items
   },

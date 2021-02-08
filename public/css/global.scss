@@ -1,5 +1,6 @@
 $pricecolor: #ee4d2d;
 $menubordercolor: #e5e5e5;
+$contentcolor: #000000;
 @mixin pc {
   @media (min-width: 960px) {
     @content;
@@ -114,7 +115,8 @@ body {
 #cateadmin .v-icon {
   margin-right: 1rem;
 }
-#goodpage input {
+#goodpage input,
+#cart .v-card {
   border: 1px solid;
   text-align: center;
 }

@@ -43,12 +43,17 @@ export function changedata(name, phone, email) {
     email: email,
   })
   return new Promise(function(resolve) {
-    Vue.axios.put('/api/v1/user_information', data).then((response) => {
-      if (response.data.result) {
-        alert('修改成功')
-      }
-      resolve(response.data.result)
-    })
+    Vue.axios
+      .put('/api/v1/user_information', data)
+      .then((response) => {
+        if (response.data.result) {
+          alert('修改個人資料成功')
+        }
+        resolve(response.data.result)
+      })
+      .catch(() => {
+        alert('修改個人資料失敗')
+      })
   })
 }
 
@@ -57,10 +62,10 @@ export function register(param) {
     Vue.axios
       .post('/api/v1/register', param)
       .then(() => {
-        alert('success')
+        alert('註冊成功')
       })
-      .catch((error) => {
-        alert(error.error)
+      .catch(() => {
+        alert('註冊失敗')
       })
   })
 }
@@ -85,33 +90,96 @@ export function adduser(account, name, email, group, level, phone) {
     Vue.axios
       .post('api/v1/user', data)
       .then((response) => {
+        alert('新增會員成功')
         resolve(response.data.result)
       })
       .catch(() => {
-        alert('新增失敗')
+        alert('新增會員失敗')
       })
   })
 }
 
+export function edituser(account, name, email, group, level, phone, status, uuid) {
+  let data = qs.stringify({
+    account: account,
+    name: name,
+    email: email,
+    group_id: group,
+    level_id: level,
+    phone: phone,
+    active: status,
+  })
+  console.log(data)
+  return new Promise(function(resolve) {
+    Vue.axios
+      .put('api/v1/user/' + uuid, data)
+      .then((response) => {
+        alert('修改會員資料成功')
+        resolve(response.data.result)
+      })
+      .catch(() => {
+        alert('修改會員資料失敗')
+      })
+  })
+}
+
+export function resetpassword(group, level, phone, password, uuid) {
+  let data = qs.stringify({
+    group_id: group,
+    level_id: level,
+    phone: phone,
+    password: password,
+    password_confirmation: password,
+  })
+  return new Promise(function(resolve) {
+    Vue.axios
+      .put('api/v1/user/' + uuid, data)
+      .then((response) => {
+        alert('重置密碼成功')
+        resolve(response.data.result)
+      })
+      .catch(() => {
+        alert('重置密碼失敗')
+      })
+  })
+}
 export function deleteuser(uuid) {
   return new Promise(function(resolve) {
     Vue.axios
       .delete('api/v1/user/' + uuid)
       .then((response) => {
-        alert('刪除成功')
+        alert('刪除會員成功')
         resolve(response.data.result)
       })
       .catch(() => {
-        alert('刪除失敗')
+        alert('刪除會員失敗')
       })
   })
 }
 
-export function getallgroup() {
-  return new Promise(function(resolve) {
-    Vue.axios.get('api/v1/dropdown/group').then((response) => {
+export function useradminformdata() {
+  const group = new Promise(function(resolve) {
+    Vue.axios.get('api/v1/dropdown/group?all=hide').then((response) => {
       resolve(response.data.result)
     })
+  })
+  const level = new Promise(function(resolve) {
+    Vue.axios.get('api/v1/dropdown/level?all=hide').then((response) => {
+      resolve(response.data.result)
+    })
+  })
+  const status = new Promise(function(resolve) {
+    Vue.axios.get('api/v1/dropdown/active?all=hide').then((response) => {
+      resolve(response.data.result)
+    })
+  })
+  return Promise.all([group, level, status]).then((result) => {
+    const res = {
+      group: result[0],
+      level: result[1],
+      status: result[2],
+    }
+    return res
   })
 }
 
@@ -152,12 +220,12 @@ export function deletecategory(level, id) {
       .delete('/api/v1/' + level + '/' + id)
       .then((response) => {
         if (response.data.result == 1) {
-          alert('刪除成功')
+          alert('刪除分類成功')
         }
         resolve(response.data.result)
       })
       .catch((error) => {
-        alert('刪除失敗')
+        alert('刪除分類失敗')
         resolve(error.error)
       })
   })
@@ -173,12 +241,12 @@ export function editcategory(level, id, name, upperid, paramid, paramname) {
       .put('/api/v1/' + level + '/' + id, data)
       .then((response) => {
         if (response.data.result) {
-          alert('修改成功')
+          alert('修改分類成功')
         }
         resolve(response.data.result)
       })
       .catch((error) => {
-        alert('修改失敗')
+        alert('修改分類失敗')
         resolve(error.error)
       })
   })
@@ -193,13 +261,13 @@ export function addcategory(level, name, upperid, paramid, paramname) {
       .post('/api/v1/' + level, data)
       .then((response) => {
         if (response.data.result) {
-          alert('新增成功')
+          alert('新增分類成功')
         }
         console.log(response.data.result)
         resolve(response.data.result)
       })
       .catch((error) => {
-        alert('新增失敗')
+        alert('新增分類失敗')
         resolve(error.error)
       })
   })
