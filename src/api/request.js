@@ -319,4 +319,24 @@ export function deletecartitem(id) {
     })
   })
 }
+
+export function additem(cateid, name, description, suggest, price, residual, status, image) {
+  let data = new FormData()
+  data.append('category3_id', cateid)
+  data.append('image', image)
+  data.append('name', name)
+  data.append('description', description)
+  data.append('suggested_price', suggest)
+  data.append('price', price)
+  data.append('residual', residual)
+  data.append('active', status)
+  return new Promise(function(resolve) {
+    Vue.axios.post('/api/v1/product', data).then((response) => {
+      if (response.data.result) {
+        alert('添加商品成功')
+      }
+      resolve(response.data.result)
+    })
+  })
+}
 export default {}

@@ -1,6 +1,6 @@
-import router from '@/router'
-import category from '@/api/category'
-import { getproducts, getitemdetail } from '@/api/request'
+// import router from '@/router'
+// import category from '@/api/category'
+import { getproducts, getitemdetail, additem } from '@/api/request'
 const state = () => ({
   search: [],
   detail: {},
@@ -18,25 +18,29 @@ const actions = {
     await commit('setCateid', param.id)
     await commit('setpage', param.page)
   },
-  searchitem({ commit }, keyword) {
-    let items = category.getallitems()
-    const res = items.map((item) => {
-      let regex = RegExp(keyword)
-      let ismatch = regex.test(item.name)
-      if (ismatch) {
-        return item
-      }
-    })
-    let searchres = res.filter((e) => e)
-    if (searchres.length == 0) {
-      searchres = []
-    }
-    commit('setsrchitems', searchres)
-    router.push('/shop').catch(() => {})
+  searchitem() {
+    // let items = category.getallitems()
+    // const res = items.map((item) => {
+    //   let regex = RegExp(keyword)
+    //   let ismatch = regex.test(item.name)
+    //   if (ismatch) {
+    //     return item
+    //   }
+    // })
+    // let searchres = res.filter((e) => e)
+    // if (searchres.length == 0) {
+    //   searchres = []
+    // }
+    // commit('setsrchitems', searchres)
+    // router.push('/shop').catch(() => {})
   },
   async getitemdetail({ commit }, id) {
     const detail = await getitemdetail(id)
     commit('setdetail', detail)
+  },
+  async additem(a, { cateid, name, description, suggest, price, residual, status, image }) {
+    console.log(image)
+    await additem(cateid, name, description, suggest, price, residual, status, image)
   },
   clear({ commit }) {
     commit('clearall')

@@ -11,6 +11,10 @@
           <v-text-field class="dialoginput" flat dense v-model="name" label="姓名" solo></v-text-field>
         </v-col>
         <v-col>
+          庫存:
+          <v-text-field class="dialoginput" flat dense v-model="residual" label="庫存" solo></v-text-field>
+        </v-col>
+        <v-col>
           建議售價:
           <v-text-field class="dialoginput" flat dense v-model="suggest" label="建議售價" solo></v-text-field>
         </v-col>
@@ -19,12 +23,17 @@
           <v-text-field class="dialoginput" flat dense v-model="price" label="特價" solo></v-text-field>
         </v-col>
         <v-col>
+          上傳圖片:
+          <v-file-input small-chips v-model="image" label="圖片.."></v-file-input>
+        </v-col>
+        <v-col>
           商品詳情:
           <v-textarea filled label="詳情..." auto-grow v-model="description"></v-textarea>
         </v-col>
         <v-col>
-          上傳圖片:
-          <v-file-input multiple small-chips label="圖片.."></v-file-input>
+          <v-radio-group v-model="status" row>
+            <v-radio v-for="active in allstatus" :key="active.id" :value="active.id" :label="active.name"></v-radio>
+          </v-radio-group>
         </v-col>
         <v-col>
           分類:
@@ -75,16 +84,27 @@
           <v-text-field class="dialoginput" flat dense v-model="name" :label="name" solo></v-text-field>
         </v-col>
         <v-col>
+          庫存:
+          <v-text-field class="dialoginput" flat dense v-model="residual" label="庫存" solo></v-text-field>
+        </v-col>
+        <v-col>
           建議售價:
-          <v-text-field class="dialoginput" flat dense v-model="suggest" :label="suggest" solo></v-text-field>
+          <v-text-field class="dialoginput" flat dense v-model="suggest" :label="'suggest'" solo></v-text-field>
         </v-col>
         <v-col>
           特價:
-          <v-text-field class="dialoginput" flat dense v-model="price" :label="price" solo></v-text-field>
+          <v-text-field class="dialoginput" flat dense v-model="price" :label="'price'" solo></v-text-field>
         </v-col>
         <v-col>
           商品詳情:
-          <v-textarea filled auto-grow v-model="description" :label="description"></v-textarea>
+          <v-textarea filled auto-grow v-model="description"></v-textarea>
+        </v-col>
+        <v-col>
+          圖片:
+          <!-- <div v-if="image != null">
+            <v-img :src="require(`../assets/images/${image.name}.png`)"></v-img>
+          </div> -->
+          <v-file-input small-chips v-model="image" label="圖片.."></v-file-input>
         </v-col>
         <v-col>
           分類:
@@ -189,7 +209,15 @@ export default {
     suggest: null,
     price: null,
     description: null,
+    residual: null,
+    active: null,
+    status: null,
+    image: null,
     page: 1,
+    allstatus: [
+      { id: '1', name: '上架' },
+      { id: '2', name: '下架' },
+    ],
   }),
   mounted: function() {
     this.$store.dispatch('items/clear')
@@ -254,6 +282,9 @@ export default {
       this.suggest = null
       this.price = null
       this.description = null
+      this.residual = null
+      this.status = null
+      this.image = null
     },
     clear(level) {
       switch (level) {
@@ -272,14 +303,37 @@ export default {
           break
       }
     },
-    additem() {
-      //...
+    async additem() {
+      let param = {
+        cateid: this.cate3id,
+        name: this.name,
+        description: this.description,
+        suggest: this.suggest,
+        price: this.price,
+        residual: this.residual,
+        status: this.status,
+        image: this.image,
+      }
+      console.log(this.image)
+      await this.$store.dispatch('items/additem', param)
     },
     edititem() {
       //...
     },
-    showdialog() {
-      //...
+    async showdialog(item) {
+      await this.$store.dispatch('items/getitemdetail', item.uuid)
+      let detail = this.$store.state.items.detail
+      this.cate3id = detail.category3.uuid
+      this.cate2id = detail.category3.category2_id
+      this.cate1id = detail.category3.category2.category1_id
+      this.name = item.name
+      this.suggest = item.suggested_price
+      this.price = item.price
+      this.description = item.description
+      this.residual = item.residual
+      this.status = item.active
+      this.image = item.image
+      this.editdialog = true
     },
   },
 }
