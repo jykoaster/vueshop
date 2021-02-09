@@ -3,7 +3,7 @@
     <v-form>
       <v-container>
         <!-- <v-btn elevation="2" color="primary" large>Edit</v-btn> -->
-        <h1>Member Data</h1>
+        <h1>會員資料</h1>
         <v-row class="formborder mb-5 justify-start pa-3">
           <v-col cols="6">
             帳號

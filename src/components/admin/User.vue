@@ -211,7 +211,6 @@ export default {
         status: this.status,
         uuid: this.uuid,
       }
-      console.log(param)
       await this.$store.dispatch('user/edituser', param)
       this.cleardata()
     },

@@ -4,7 +4,7 @@ export function logout() {
   Vue.axios
     .post('/api/v1/logout')
     .then(() => {
-      alert('Logout Success')
+      alert('登出成功')
     })
     .catch((error) => {
       alert(error.error)
@@ -14,7 +14,7 @@ export function login(param) {
   Vue.axios
     .post('/api/v1/login', param)
     .then(() => {
-      alert('success')
+      alert('登入成功')
     })
     .catch((error) => {
       alert(error.error)
@@ -109,7 +109,6 @@ export function edituser(account, name, email, group, level, phone, status, uuid
     phone: phone,
     active: status,
   })
-  console.log(data)
   return new Promise(function(resolve) {
     Vue.axios
       .put('api/v1/user/' + uuid, data)
@@ -263,7 +262,6 @@ export function addcategory(level, name, upperid, paramid, paramname) {
         if (response.data.result) {
           alert('新增分類成功')
         }
-        console.log(response.data.result)
         resolve(response.data.result)
       })
       .catch((error) => {

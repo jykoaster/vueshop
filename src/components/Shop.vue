@@ -1,12 +1,12 @@
 <template>
-  <v-card flat tile>
-    <v-container fluid v-show="cards.length != 0">
-      <v-subheader>item route...</v-subheader>
+  <v-container id="shoppage">
+    <div v-show="cards.length != 0">
       <v-row class="justify-center mb-5">
         <v-col v-for="(card, a) in cards.data" :key="a" cols="12" sm="6" md="3">
           <v-hover v-slot:default="{ hover }">
-            <v-card tile color="black" :elevation="hover ? 24 : 2" @click="godetail(card.uuid)">
-              <v-img height="300px" :src="card.src"> </v-img>
+            <v-card flat tile color="black" :elevation="hover ? 5 : 0" @click="godetail(card.uuid)">
+              <v-img v-if="card.image == null" height="300px" :src="require(`../assets/images/defaultitem.png`)" />
+              <v-img v-if="card.image != null" height="300px" :src="require(`../assets/images/${card.image}.png`)" />
               <v-card-actions class="white justify-center d-block">
                 <v-card-text class="pt-2 pb-2" block v-text="card.name"></v-card-text>
                 <v-card-text class="pt-2 pb-2 price">特價{{ card.price }}</v-card-text>
@@ -18,16 +18,17 @@
       <div class="text-center">
         <v-pagination v-model="page" :length="cards.last_page" v-on:click.native="changepage()"></v-pagination>
       </div>
-    </v-container>
-    <v-container v-show="cards.length == 0">
-      no search items
-    </v-container>
-  </v-card>
+    </div>
+    <v-row v-show="cards.length == 0">
+      <v-col>{{ message }}</v-col>
+    </v-row>
+  </v-container>
 </template>
 <script>
 import { mapState } from 'vuex'
 export default {
   data: () => ({
+    message: '沒有符合條件的商品',
     cateid: '',
     page: 1,
   }),

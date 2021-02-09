@@ -22,7 +22,7 @@ const router = new Router({
       path: '',
       component: Home,
       meta: {
-        title: 'Home',
+        title: '首頁',
       },
     },
     {
@@ -30,7 +30,7 @@ const router = new Router({
       path: '/member',
       component: Member,
       meta: {
-        title: 'Member',
+        title: '會員資料',
       },
     },
     {
@@ -38,7 +38,7 @@ const router = new Router({
       path: '/shop',
       component: Shop,
       meta: {
-        title: 'Shop',
+        title: '商品列表',
       },
     },
     {
@@ -46,7 +46,7 @@ const router = new Router({
       name: 'goods',
       component: Good,
       meta: {
-        title: 'Good',
+        title: '商品詳情',
       },
     },
     {
@@ -54,7 +54,7 @@ const router = new Router({
       name: 'cart',
       component: Cart,
       meta: {
-        title: 'Cart',
+        title: '購物車',
       },
     },
     {
@@ -74,11 +74,34 @@ const router = new Router({
     {
       path: '/admin',
       component: Admin,
+
       redirect: '/admin/category',
+
       children: [
-        { path: 'category', name: 'Setcategory', component: Setcategory },
-        { path: 'items', name: 'Setitems', component: Setitem },
-        { path: 'setuser', name: 'Setuser', component: Setuser },
+        {
+          path: 'category',
+          name: 'Setcategory',
+          component: Setcategory,
+          meta: {
+            title: '分類管理',
+          },
+        },
+        {
+          path: 'items',
+          name: 'Setitems',
+          component: Setitem,
+          meta: {
+            title: '商品管理',
+          },
+        },
+        {
+          path: 'setuser',
+          name: 'Setuser',
+          component: Setuser,
+          meta: {
+            title: '會員管理',
+          },
+        },
       ],
     },
     {

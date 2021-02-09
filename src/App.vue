@@ -52,9 +52,11 @@
           <v-col class="d-flex pb-0 pt-0" cols="12">
             <v-toolbar-title class="ml-5 titlecursor text-h4 align-self-center" @click="home()">Market</v-toolbar-title>
             <v-spacer></v-spacer>
-            <v-btn height="60" text tile v-for="option of options" :key="option.name">
+            <!-- custom options start  -->
+            <!-- <v-btn height="60" text tile v-for="option of options" :key="option.name">
               <span>{{ option.name }}</span>
-            </v-btn>
+            </v-btn> -->
+            <!-- custom options end -->
             <!-- menu start -->
             <v-menu
               open-on-hover
@@ -105,7 +107,7 @@
                 flat
                 class="pt-0"
                 auto-grow
-                label="Search"
+                label="搜尋商品"
                 rows="1"
                 v-model="srch"
                 append-icon="mdi-magnify"
@@ -121,13 +123,39 @@
     <v-main>
       <router-view />
     </v-main>
-    <v-footer padless>
-      <v-row justify="center" no-gutters>
-        <v-btn v-for="link in links" :key="link" text rounded class="my-2">
-          <v-icon>{{ link }}</v-icon>
-        </v-btn>
-        <v-col class="py-4 text-center" cols="12">
-          <strong>Company</strong>
+    <v-footer>
+      <v-row class="d-block d-md-flex">
+        <v-col cols="12" md="6" class="d-flex justify-md-end text-center">
+          <v-col class="mr-5" cols="6" md="4">
+            <p class="text-h6 font-weight-black">聯絡資訊</p>
+            <div>
+              <p>客服專線: (xx)-xxxxxxxx</p>
+              <p>E-mail: company@email</p>
+            </div>
+          </v-col>
+          <v-col class="mr-5" cols="6" md="4">
+            <p class="text-h6 font-weight-black">條款與政策</p>
+            <div>
+              <p>購物須知</p>
+              <p>退換貨政策</p>
+            </div>
+          </v-col>
+        </v-col>
+        <v-col cols="12" md="6" class="d-flex justify-md-start text-center">
+          <v-col cols="6" md="4" class="mr-5">
+            <p class="text-h6 font-weight-black">關於我們</p>
+            <div>
+              <p>品牌概念</p>
+              <p>未來展望</p>
+            </div>
+          </v-col>
+          <v-col class="mr-5" cols="6" md="4">
+            <p class="text-h6 font-weight-black">關注我們</p>
+            <div>
+              <v-icon>mdi-facebook</v-icon>
+              <v-icon>mdi-instagram</v-icon>
+            </div>
+          </v-col>
         </v-col>
       </v-row>
     </v-footer>
@@ -139,20 +167,19 @@ export default {
   data: () => ({
     allusertags: [
       [
-        { name: 'Login', path: '/login', icon: 'mdi-account' },
-        { name: 'Cart', path: '/cart', icon: 'mdi-cart' },
+        { name: '登入', path: '/login', icon: 'mdi-account' },
+        { name: '購物車', path: '/cart', icon: 'mdi-cart' },
       ],
       [
-        { name: 'Admin', path: '/admin', icon: ' mdi-account-circle' },
-        { name: 'Member', path: '/member', icon: 'mdi-account' },
-        { name: 'Logout', path: '/logout', icon: 'mdi-logout' },
-        { name: 'Cart', path: '/cart', icon: 'mdi-cart' },
+        { name: '管理後臺', path: '/admin', icon: ' mdi-account-circle' },
+        { name: '會員詳情', path: '/member', icon: 'mdi-account' },
+        { name: '登出', path: '/logout', icon: 'mdi-logout' },
+        { name: '購物車', path: '/cart', icon: 'mdi-cart' },
       ],
     ],
-    options: [{ name: 'NEWS' }],
+    // options: [{ name: 'NEWS' }],//custom options
     drawer: false,
     srch: '',
-    links: ['mdi-image-filter-vintage', 'mdi-instagram'],
   }),
   mounted: function() {
     this.$store.dispatch('category/getallcategorys')

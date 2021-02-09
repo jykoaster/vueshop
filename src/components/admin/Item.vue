@@ -23,6 +23,10 @@
           <v-textarea filled label="詳情..." auto-grow v-model="description"></v-textarea>
         </v-col>
         <v-col>
+          上傳圖片:
+          <v-file-input multiple small-chips label="圖片.."></v-file-input>
+        </v-col>
+        <v-col>
           分類:
           <v-select
             v-on:click="clear(1)"
@@ -275,7 +279,6 @@ export default {
       //...
     },
     showdialog() {
-      console.log(1)
       //...
     },
   },

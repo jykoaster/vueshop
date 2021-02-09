@@ -105,20 +105,44 @@ body {
 .titlecursor {
   cursor: pointer;
 }
-.roundimg {
+.roundimg,
+.roundimg:hover {
   border-radius: 50%;
 }
 .roundimg:hover {
   border: 1px solid;
-  border-radius: 50%;
 }
 #cateadmin .v-icon {
   margin-right: 1rem;
 }
 #goodpage input,
-#cart .v-card {
+#cart .v-card,
+#cart .v-btn,
+#shoppage .v-card {
   border: 1px solid;
+}
+#goodpage input,
+#cart .v-card,
+#cart .v-btn {
   text-align: center;
+}
+
+#shoppage .v-card {
+  border-color: $menubordercolor !important;
+}
+
+#cart .v-btn,
+#goodpage .v-btn {
+  border: 1px solid #000000;
+  background-color: #000000;
+  color: #ffffff;
+}
+
+#cart .v-btn:hover,
+#goodpage .v-btn:hover {
+  border: 1px solid;
+  background-color: #ffffff;
+  color: #000000;
 }
 
 .dialoginput {

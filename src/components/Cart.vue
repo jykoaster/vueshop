@@ -1,16 +1,48 @@
 <template>
   <v-main id="cart">
-    <v-container v-show="items.length != 0">
-      <v-card class="d-flex mb-2" v-for="item in items" :key="item.id" flat tile @click="godetail(item.product_uuid)">
-        <v-card-text class="text-align-center"> Name: {{ item.product.name }} </v-card-text>
-        <v-card-text class="text-align-center"> count:{{ item.number }} </v-card-text>
-        <v-cart-actions class="align-self-center">
-          <v-btn text class="mr-6" @click.stop="ditem(item.id)">delete</v-btn>
-        </v-cart-actions>
-      </v-card>
-    </v-container>
-    <v-container v-show="items.length == 0">
-      {{ message }}
+    <v-container>
+      <h1>購物車</h1>
+      <v-row v-show="items.length != 0">
+        <v-col cols="8">
+          <v-card
+            class="d-flex mb-2"
+            v-for="item in items"
+            :key="item.id"
+            flat
+            tile
+            @click="godetail(item.product_uuid)"
+          >
+            <v-card-text class="text-align-center align-self-center"> {{ item.product.name }} </v-card-text>
+            <v-card-text class="text-align-center"> </v-card-text>
+            <v-card-text class="text-align-center d-flex">
+              <v-col> 售價:{{ item.product.price }}</v-col>
+              <v-col> 數量:{{ item.number }}</v-col>
+            </v-card-text>
+            <v-card-actions>
+              <v-btn text tile class="mr-6" @click.stop="ditem(item.id)">刪除</v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-col>
+        <v-col cols="3">
+          <v-card flat tile>
+            <v-card-title>商品統計</v-card-title>
+
+            <v-col>
+              <v-card-text class="text-start"> 總數: </v-card-text>
+              <v-card-text class="text-start"> 原價: </v-card-text>
+              <v-card-text class="text-start"> 折扣: </v-card-text>
+              <hr />
+              <v-card-text class="text-start"> 總額: </v-card-text>
+              <v-card-actions>
+                <v-btn text tile class="mr-6" @click.stop="checkout">結帳</v-btn>
+              </v-card-actions>
+            </v-col>
+          </v-card>
+        </v-col>
+      </v-row>
+      <v-row v-show="items.length == 0">
+        <v-col>{{ message }}</v-col>
+      </v-row>
     </v-container>
   </v-main>
 </template>
@@ -18,7 +50,7 @@
 import { mapState } from 'vuex'
 export default {
   data: () => ({
-    message: 'no items',
+    message: '目前沒有商品',
   }),
   mounted: function() {
     this.$store.dispatch('cart/getcartitems')
@@ -30,6 +62,9 @@ export default {
     async godetail(id) {
       await this.$store.dispatch('items/getitemdetail', id)
       this.$router.push('/goods')
+    },
+    checkout() {
+      //...
     },
   },
   computed: {
