@@ -100,10 +100,18 @@
           <v-textarea filled auto-grow v-model="description"></v-textarea>
         </v-col>
         <v-col>
+          <v-radio-group v-model="status" row>
+            <v-radio v-for="active in allstatus" :key="active.id" :value="active.id" :label="active.name"></v-radio>
+          </v-radio-group>
+        </v-col>
+        <v-col>
           圖片:
           <!-- <div v-if="image != null">
-            <v-img :src="require(`../assets/images/${image.name}.png`)"></v-img>
+            <v-img :src="require(`../../assets/images/${image}.png`)" />
           </div> -->
+          <div v-if="image == null">
+            <v-img :src="require(`../../assets/images/defaultitem.png`)" />
+          </div>
           <v-file-input small-chips v-model="image" label="圖片.."></v-file-input>
         </v-col>
         <v-col>
@@ -213,10 +221,11 @@ export default {
     active: null,
     status: null,
     image: null,
+    uuid: null,
     page: 1,
     allstatus: [
-      { id: '1', name: '上架' },
-      { id: '2', name: '下架' },
+      { id: 1, name: '上架' },
+      { id: 2, name: '下架' },
     ],
   }),
   mounted: function() {
@@ -285,6 +294,7 @@ export default {
       this.residual = null
       this.status = null
       this.image = null
+      this.uuid = null
     },
     clear(level) {
       switch (level) {
@@ -314,11 +324,22 @@ export default {
         status: this.status,
         image: this.image,
       }
-      console.log(this.image)
       await this.$store.dispatch('items/additem', param)
+      this.cleardata()
     },
-    edititem() {
-      //...
+    async edititem() {
+      let param = {
+        cateid: this.cate3id,
+        name: this.name,
+        description: this.description,
+        suggest: this.suggest,
+        price: this.price,
+        residual: this.residual,
+        status: this.status,
+        image: this.image,
+        uuid: this.uuid,
+      }
+      await this.$store.dispatch('items/edititem', param)
     },
     async showdialog(item) {
       await this.$store.dispatch('items/getitemdetail', item.uuid)
@@ -333,6 +354,7 @@ export default {
       this.residual = item.residual
       this.status = item.active
       this.image = item.image
+      this.uuid = item.uuid
       this.editdialog = true
     },
   },

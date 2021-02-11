@@ -1,6 +1,6 @@
 // import router from '@/router'
 // import category from '@/api/category'
-import { getproducts, getitemdetail, additem } from '@/api/request'
+import { getproducts, getitemdetail, additem, edititem } from '@/api/request'
 const state = () => ({
   search: [],
   detail: {},
@@ -39,8 +39,10 @@ const actions = {
     commit('setdetail', detail)
   },
   async additem(a, { cateid, name, description, suggest, price, residual, status, image }) {
-    console.log(image)
     await additem(cateid, name, description, suggest, price, residual, status, image)
+  },
+  async edititem(a, { cateid, name, description, suggest, price, residual, status, image, uuid }) {
+    await edititem(cateid, name, description, suggest, price, residual, status, image, uuid)
   },
   clear({ commit }) {
     commit('clearall')

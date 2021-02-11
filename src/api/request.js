@@ -323,7 +323,7 @@ export function deletecartitem(id) {
 export function additem(cateid, name, description, suggest, price, residual, status, image) {
   let data = new FormData()
   data.append('category3_id', cateid)
-  data.append('image', image)
+  data.append('image', image, image.name)
   data.append('name', name)
   data.append('description', description)
   data.append('suggested_price', suggest)
@@ -335,6 +335,39 @@ export function additem(cateid, name, description, suggest, price, residual, sta
       if (response.data.result) {
         alert('添加商品成功')
       }
+      resolve(response.data.result)
+    })
+  })
+}
+export function edititem(cateid, name, description, suggest, price, residual, status, image, uuid) {
+  // let data = new URLSearchParams()
+  let data = qs.stringify({
+    category3_id: cateid,
+    name: name,
+    description: description,
+    suggested_price: suggest,
+    price: price,
+    residual: residual,
+    image: image,
+    active: status,
+  })
+  // console.log(image)
+  // data.append('category3_id', cateid)
+  // data.append('image', image, image.name)
+  // data.append('name', name)
+  // data.append('description', description)
+  // data.append('suggested_price', suggest)
+  // data.append('price', price)
+  // data.append('residual', residual)
+  // data.append('active', status)
+  // const config = {
+  //   headers: {
+  //     'Content-Type': 'application/form-data',
+  //   },
+  // }
+  return new Promise(function(resolve) {
+    Vue.axios.put('api/v1/product/' + uuid, data).then((response) => {
+      console.log(response.data.result)
       resolve(response.data.result)
     })
   })
