@@ -30,10 +30,10 @@ export default {
   data: () => ({
     message: '沒有符合條件的商品',
     cateid: '',
-    page: 1,
+    page: '',
   }),
   mounted: function() {
-    // this.page = this.$store.state.items.page
+    this.page = this.$store.state.items.page
   },
   computed: {
     ...mapState({
@@ -44,18 +44,17 @@ export default {
   },
   methods: {
     async changepage() {
-      // let param = {
-      //   id: this.$store.state.items.cateid,
-      //   page: this.page,
-      // }
-
       let res = this.cards.links.find((element) => {
         if (element.label == this.page) {
           return element
         }
       })
       let url = res.url.match(/\/api.*/)
-      await this.$store.dispatch('items/changepage', url[0])
+      let param = {
+        url: url[0],
+        page: this.page,
+      }
+      await this.$store.dispatch('items/changepage', param)
       this.$router.push('/shop').catch(() => {})
     },
     async godetail(id) {

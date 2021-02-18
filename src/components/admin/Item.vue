@@ -112,7 +112,7 @@
           <div v-if="image == null">
             <v-img :src="require(`../../assets/images/defaultitem.png`)" />
           </div>
-          <v-file-input v-model="image" label="圖片.."></v-file-input>
+          <v-file-input chips v-model="image" label="圖片.."></v-file-input>
         </v-col>
         <v-col>
           分類:
@@ -226,7 +226,7 @@ export default {
     status: null,
     image: [],
     uuid: null,
-    // page: 1,
+    page: 1,
     allstatus: [
       { id: 1, name: '上架' },
       { id: 2, name: '下架' },
@@ -280,16 +280,13 @@ export default {
       }
     },
     async changepage() {
-      // let param = {
-      //   id: this.$store.state.items.cateid,
-      //   page: this.page,
-      //   status: 0,
-      // }
       let url = this.items.links[this.page].url
       url = url.match(/\/api.*/)
-      await this.$store.dispatch('items/changepage', url[0])
-      // this.$router.push('/shop').catch(() => {})
-      // await this.$store.dispatch('items/getitems', param)
+      let param = {
+        url: url[0],
+        page: this.page,
+      }
+      await this.$store.dispatch('items/changepage', param)
     },
     cleardata() {
       this.editdialog = false

@@ -355,7 +355,7 @@ export function additem(cateid, name, description, suggest, price, residual, sta
     })
   })
 }
-export function edititem(cateid, name, description, suggest, price, residual, status, uuid) {
+export function edititem(cateid, name, description, suggest, price, residual, status, image, uuid) {
   let data = qs.stringify({
     category3_uuid: cateid,
     name: name,
@@ -365,11 +365,21 @@ export function edititem(cateid, name, description, suggest, price, residual, st
     residual: residual,
     active: status,
   })
+  let imgobj = null
+  if (image && typeof image != 'string') {
+    imgobj = new FormData()
+    imgobj.append('image', image, image.name)
+  }
+
   return new Promise(function(resolve) {
     Vue.axios.put('api/v1/product/' + uuid, data).then((response) => {
       resolve(response.data.result)
-      alert('修改成功')
     })
+    if (image && typeof image != 'string') {
+      Vue.axios.post('api/v1/product/image/' + uuid, imgobj).then((response) => {
+        resolve(response.data.result)
+      })
+    }
   })
 }
 export default {}

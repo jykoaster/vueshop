@@ -18,9 +18,10 @@ const actions = {
     await commit('setCateid', id)
     await commit('setpage', page)
   },
-  async changepage({ commit }, url) {
+  async changepage({ commit }, { url, page }) {
     let data = await getitemsbyurl(url)
     await commit('setsrchitems', data)
+    await commit('setpage', page)
   },
   async searchitem({ commit }, srch) {
     let data = await searchitem(srch)
@@ -43,8 +44,8 @@ const actions = {
     await commit('setCateid', cateid)
     await commit('setpage', 1)
   },
-  async edititem({ commit }, { cateid, name, description, suggest, price, residual, status, uuid, page }) {
-    await edititem(cateid, name, description, suggest, price, residual, status, uuid)
+  async edititem({ commit }, { cateid, name, description, suggest, price, residual, status, image, uuid, page }) {
+    await edititem(cateid, name, description, suggest, price, residual, status, image, uuid)
     let data = await getproducts(cateid, page, 0)
     if (data.data.length == 0) {
       data = []
