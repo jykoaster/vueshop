@@ -6,7 +6,7 @@
           <v-hover v-slot:default="{ hover }">
             <v-card flat tile color="black" :elevation="hover ? 5 : 0" @click="godetail(card.uuid)">
               <v-img v-if="card.image == null" height="300px" :src="require(`../assets/images/defaultitem.png`)" />
-              <v-img v-if="card.image != null" height="300px" :src="require(`../assets/images/${card.image}.png`)" />
+              <v-img v-if="card.image != null" height="300px" :src="'//127.0.0.1:8090/storage/' + card.image" />
               <v-card-actions class="white justify-center d-block">
                 <v-card-text class="pt-2 pb-2" block v-text="card.name"></v-card-text>
                 <v-card-text class="pt-2 pb-2 price">特價{{ card.price }}</v-card-text>
@@ -33,7 +33,7 @@ export default {
     page: 1,
   }),
   mounted: function() {
-    this.page = this.$store.state.items.page
+    // this.page = this.$store.state.items.page
   },
   computed: {
     ...mapState({
@@ -44,11 +44,18 @@ export default {
   },
   methods: {
     async changepage() {
-      let param = {
-        id: this.$store.state.items.cateid,
-        page: this.page,
-      }
-      await this.$store.dispatch('items/getitems', param)
+      // let param = {
+      //   id: this.$store.state.items.cateid,
+      //   page: this.page,
+      // }
+
+      let res = this.cards.links.find((element) => {
+        if (element.label == this.page) {
+          return element
+        }
+      })
+      let url = res.url.match(/\/api.*/)
+      await this.$store.dispatch('items/changepage', url[0])
       this.$router.push('/shop').catch(() => {})
     },
     async godetail(id) {

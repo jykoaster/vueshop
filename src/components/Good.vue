@@ -3,7 +3,7 @@
     <div class="text-h6">{{ route }}</div>
     <v-row class="justify-center">
       <v-col class="ma-md-10" md="4" cols="12">
-        <v-img height="100%" :src="require(`../assets/images/home_area5_1.png`)" />
+        <v-img height="100%" :src="'//127.0.0.1:8090/storage/' + item.image" />
       </v-col>
       <v-col class="ma-md-10">
         <v-col>

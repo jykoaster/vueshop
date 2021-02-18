@@ -186,8 +186,11 @@ export default {
   },
   methods: {
     search() {
-      this.$store.dispatch('items/searchitem', this.srch)
-      this.$data.drawer = false
+      if (this.srch != '') {
+        this.$store.dispatch('items/searchitem', this.srch)
+        this.$data.drawer = false
+        this.$router.push('/shop').catch(() => {})
+      }
       this.srch = ''
     },
     home() {
@@ -197,6 +200,7 @@ export default {
       let param = {
         id: id,
         page: 1,
+        status: 1,
       }
       await this.$store.dispatch('items/getitems', param)
       this.$router.push('/shop').catch(() => {})

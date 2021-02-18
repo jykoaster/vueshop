@@ -1,6 +1,6 @@
 // import router from '@/router'
 // import category from '@/api/category'
-import { getproducts, getitemdetail, additem, edititem } from '@/api/request'
+import { getproducts, getitemdetail, additem, edititem, searchitem, getitemsbyurl } from '@/api/request'
 const state = () => ({
   search: [],
   detail: {},
@@ -9,40 +9,49 @@ const state = () => ({
 })
 
 const actions = {
-  async getitems({ commit }, param) {
-    let data = await getproducts(param.id, param.page)
+  async getitems({ commit }, { id, page, status }) {
+    let data = await getproducts(id, page, status)
     if (data.data.length == 0) {
       data = []
     }
     await commit('setsrchitems', data)
-    await commit('setCateid', param.id)
-    await commit('setpage', param.page)
+    await commit('setCateid', id)
+    await commit('setpage', page)
   },
-  searchitem() {
-    // let items = category.getallitems()
-    // const res = items.map((item) => {
-    //   let regex = RegExp(keyword)
-    //   let ismatch = regex.test(item.name)
-    //   if (ismatch) {
-    //     return item
-    //   }
-    // })
-    // let searchres = res.filter((e) => e)
-    // if (searchres.length == 0) {
-    //   searchres = []
-    // }
-    // commit('setsrchitems', searchres)
-    // router.push('/shop').catch(() => {})
+  async changepage({ commit }, url) {
+    let data = await getitemsbyurl(url)
+    await commit('setsrchitems', data)
+  },
+  async searchitem({ commit }, srch) {
+    let data = await searchitem(srch)
+    if (data.data.length == 0) {
+      data = []
+    }
+    await commit('setsrchitems', data)
   },
   async getitemdetail({ commit }, id) {
     const detail = await getitemdetail(id)
     commit('setdetail', detail)
   },
-  async additem(a, { cateid, name, description, suggest, price, residual, status, image }) {
+  async additem({ commit }, { cateid, name, description, suggest, price, residual, status, image }) {
     await additem(cateid, name, description, suggest, price, residual, status, image)
+    let data = await getproducts(cateid, 1, 0)
+    if (data.data.length == 0) {
+      data = []
+    }
+    await commit('setsrchitems', data)
+    await commit('setCateid', cateid)
+    await commit('setpage', 1)
   },
-  async edititem(a, { cateid, name, description, suggest, price, residual, status, image, uuid }) {
-    await edititem(cateid, name, description, suggest, price, residual, status, image, uuid)
+  async edititem({ commit }, { cateid, name, description, suggest, price, residual, status, uuid, page }) {
+    await edititem(cateid, name, description, suggest, price, residual, status, uuid)
+    let data = await getproducts(cateid, page, 0)
+    if (data.data.length == 0) {
+      data = []
+    }
+    await commit('setsrchitems', data)
+    await commit('setCateid', cateid)
+    await commit('setpage', 1)
   },
   clear({ commit }) {
     commit('clearall')

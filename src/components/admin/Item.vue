@@ -99,20 +99,20 @@
           商品詳情:
           <v-textarea filled auto-grow v-model="description"></v-textarea>
         </v-col>
-        <v-col>
+        <!-- <v-col>
           <v-radio-group v-model="status" row>
             <v-radio v-for="active in allstatus" :key="active.id" :value="active.id" :label="active.name"></v-radio>
           </v-radio-group>
-        </v-col>
+        </v-col> -->
         <v-col>
           圖片:
-          <!-- <div v-if="image != null">
-            <v-img :src="require(`../../assets/images/${image}.png`)" />
-          </div> -->
+          <div v-if="image != null">
+            <v-img :src="'//127.0.0.1:8090/storage/' + image" />
+          </div>
           <div v-if="image == null">
             <v-img :src="require(`../../assets/images/defaultitem.png`)" />
           </div>
-          <v-file-input small-chips v-model="image" label="圖片.."></v-file-input>
+          <v-file-input v-model="image" label="圖片.."></v-file-input>
         </v-col>
         <v-col>
           分類:
@@ -194,6 +194,11 @@
         <v-list-item-content class="ml-5">
           <v-list-item-title>{{ card.name }}</v-list-item-title>
         </v-list-item-content>
+        <v-switch
+          :input-value="card.active == '1' ? true : false"
+          :label="card.active == 2 ? '下架' : '上架'"
+          @click="offself(card)"
+        ></v-switch>
       </v-list-item>
       <div class="text-center">
         <v-pagination v-model="page" :length="items.last_page" v-on:click.native="changepage()"></v-pagination>
@@ -218,11 +223,10 @@ export default {
     price: null,
     description: null,
     residual: null,
-    active: null,
     status: null,
-    image: null,
+    image: [],
     uuid: null,
-    page: 1,
+    // page: 1,
     allstatus: [
       { id: 1, name: '上架' },
       { id: 2, name: '下架' },
@@ -266,7 +270,8 @@ export default {
       if (this.cate1id != null && this.cate2id != null && this.cate3id != null) {
         let param = {
           id: this.cate3id,
-          page: this.page,
+          page: 1,
+          status: 0,
         }
         await this.$store.dispatch('items/getitems', param)
         this.clear(1)
@@ -275,11 +280,16 @@ export default {
       }
     },
     async changepage() {
-      let param = {
-        id: this.$store.state.items.cateid,
-        page: this.page,
-      }
-      await this.$store.dispatch('items/getitems', param)
+      // let param = {
+      //   id: this.$store.state.items.cateid,
+      //   page: this.page,
+      //   status: 0,
+      // }
+      let url = this.items.links[this.page].url
+      url = url.match(/\/api.*/)
+      await this.$store.dispatch('items/changepage', url[0])
+      // this.$router.push('/shop').catch(() => {})
+      // await this.$store.dispatch('items/getitems', param)
     },
     cleardata() {
       this.editdialog = false
@@ -338,8 +348,10 @@ export default {
         status: this.status,
         image: this.image,
         uuid: this.uuid,
+        page: this.page,
       }
       await this.$store.dispatch('items/edititem', param)
+      this.cleardata()
     },
     async showdialog(item) {
       await this.$store.dispatch('items/getitemdetail', item.uuid)
@@ -356,6 +368,25 @@ export default {
       this.image = item.image
       this.uuid = item.uuid
       this.editdialog = true
+    },
+    async offself({ uuid, name, description, suggested_price, price, residual, active }) {
+      await this.$store.dispatch('items/getitemdetail', uuid)
+      let detail = this.$store.state.items.detail
+      active == 1 ? (active = 2) : (active = 1)
+      let param = {
+        cateid: detail.category3.uuid,
+        name: name,
+        description: description,
+        suggest: suggested_price,
+        price: price,
+        residual: residual,
+        status: active,
+        // image: this.image,
+        uuid: uuid,
+        page: this.page,
+      }
+      console.log(param)
+      await this.$store.dispatch('items/edititem', param)
     },
   },
 }

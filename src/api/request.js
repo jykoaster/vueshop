@@ -189,9 +189,25 @@ export function getallcategorys() {
     })
   })
 }
-export function getproducts(uuid, page) {
+export function getproducts(uuid, page, status) {
   return new Promise(function(resolve) {
-    Vue.axios.get('/api/v1/product/' + uuid, { params: { page: page } }).then((response) => {
+    Vue.axios.get('/api/v1/product/' + status + '/' + uuid, { params: { page: page } }).then((response) => {
+      resolve(response.data.result)
+    })
+  })
+}
+
+export function searchitem(srch) {
+  return new Promise(function(resolve) {
+    Vue.axios.get('/api/v1/product/search?q=' + srch).then((response) => {
+      resolve(response.data.result)
+    })
+  })
+}
+
+export function getitemsbyurl(url) {
+  return new Promise(function(resolve) {
+    Vue.axios.get(url).then((response) => {
       resolve(response.data.result)
     })
   })
@@ -322,7 +338,7 @@ export function deletecartitem(id) {
 
 export function additem(cateid, name, description, suggest, price, residual, status, image) {
   let data = new FormData()
-  data.append('category3_id', cateid)
+  data.append('category3_uuid', cateid)
   data.append('image', image, image.name)
   data.append('name', name)
   data.append('description', description)
@@ -339,36 +355,20 @@ export function additem(cateid, name, description, suggest, price, residual, sta
     })
   })
 }
-export function edititem(cateid, name, description, suggest, price, residual, status, image, uuid) {
-  // let data = new URLSearchParams()
+export function edititem(cateid, name, description, suggest, price, residual, status, uuid) {
   let data = qs.stringify({
-    category3_id: cateid,
+    category3_uuid: cateid,
     name: name,
     description: description,
     suggested_price: suggest,
     price: price,
     residual: residual,
-    image: image,
     active: status,
   })
-  // console.log(image)
-  // data.append('category3_id', cateid)
-  // data.append('image', image, image.name)
-  // data.append('name', name)
-  // data.append('description', description)
-  // data.append('suggested_price', suggest)
-  // data.append('price', price)
-  // data.append('residual', residual)
-  // data.append('active', status)
-  // const config = {
-  //   headers: {
-  //     'Content-Type': 'application/form-data',
-  //   },
-  // }
   return new Promise(function(resolve) {
     Vue.axios.put('api/v1/product/' + uuid, data).then((response) => {
-      console.log(response.data.result)
       resolve(response.data.result)
+      alert('修改成功')
     })
   })
 }

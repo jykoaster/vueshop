@@ -6,7 +6,7 @@
         <v-col cols="8">
           <v-card
             class="d-flex mb-2"
-            v-for="item in items"
+            v-for="item in items.data"
             :key="item.id"
             flat
             tile
@@ -28,11 +28,13 @@
             <v-card-title>商品統計</v-card-title>
 
             <v-col>
-              <v-card-text class="text-start"> 總數: </v-card-text>
-              <v-card-text class="text-start"> 原價: </v-card-text>
-              <v-card-text class="text-start"> 折扣: </v-card-text>
+              <v-card-text class="text-start"> 總數: {{ items.total.number }}</v-card-text>
+              <v-card-text class="text-start"> 原價: {{ items.total.suggested_price }}</v-card-text>
+              <v-card-text class="text-start priceoff">
+                折扣: -{{ items.total.suggested_price - items.total.price }}</v-card-text
+              >
               <hr />
-              <v-card-text class="text-start"> 總額: </v-card-text>
+              <v-card-text class="text-start"> 總額: {{ items.total.price }}</v-card-text>
               <v-card-actions>
                 <v-btn text tile class="mr-6" @click.stop="checkout">結帳</v-btn>
               </v-card-actions>
