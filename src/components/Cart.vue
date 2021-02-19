@@ -2,28 +2,34 @@
   <v-main id="cart">
     <v-container>
       <h1>購物車</h1>
-      <v-row v-show="items.length != 0">
-        <v-col cols="8">
-          <v-card
-            class="d-flex mb-2"
-            v-for="item in items.data"
-            :key="item.id"
-            flat
-            tile
-            @click="godetail(item.product_uuid)"
-          >
-            <v-card-text class="text-align-center align-self-center"> {{ item.product.name }} </v-card-text>
-            <v-card-text class="text-align-center"> </v-card-text>
-            <v-card-text class="text-align-center d-flex">
-              <v-col> 售價:{{ item.product.price }}</v-col>
-              <v-col> 數量:{{ item.number }}</v-col>
-            </v-card-text>
-            <v-card-actions>
-              <v-btn text tile class="mr-6" @click.stop="ditem(item.id)">刪除</v-btn>
-            </v-card-actions>
-          </v-card>
+      <v-row class="d-block d-md-flex">
+        <v-col cols="8" v-show="items.data.length == 0">{{ message }}</v-col>
+        <v-col cols="12" md="9">
+          <transition v-enter-active="animate__backOutUp">
+            <v-card
+              class="d-block d-md-flex mb-2"
+              v-for="item in items.data"
+              :key="item.id"
+              flat
+              tile
+              @click="godetail(item.product_uuid)"
+            >
+              <v-col cols="12" md="4">
+                <v-card-text class="text-align-center align-self-center"> {{ item.product.name }} </v-card-text>
+              </v-col>
+              <v-col cols="12" md="6" class="text-align-center d-flex">
+                <v-card-text> 售價:{{ item.product.price }}</v-card-text>
+                <v-card-text> 數量:{{ item.number }}</v-card-text>
+              </v-col>
+              <v-col cols="12" md="2">
+                <v-card-actions>
+                  <v-btn text tile class="mr-6" @click.stop="ditem(item.id)">刪除</v-btn>
+                </v-card-actions>
+              </v-col>
+            </v-card>
+          </transition>
         </v-col>
-        <v-col cols="3">
+        <v-col cols="12" md="3">
           <v-card flat tile>
             <v-card-title>商品統計</v-card-title>
 
@@ -31,7 +37,7 @@
               <v-card-text class="text-start"> 總數: {{ items.total.number }}</v-card-text>
               <v-card-text class="text-start"> 原價: {{ items.total.suggested_price }}</v-card-text>
               <v-card-text class="text-start priceoff">
-                折扣: -{{ items.total.suggested_price - items.total.price }}</v-card-text
+                折扣: {{ items.total.price - items.total.suggested_price }}</v-card-text
               >
               <hr />
               <v-card-text class="text-start"> 總額: {{ items.total.price }}</v-card-text>
@@ -41,9 +47,6 @@
             </v-col>
           </v-card>
         </v-col>
-      </v-row>
-      <v-row v-show="items.length == 0">
-        <v-col>{{ message }}</v-col>
       </v-row>
     </v-container>
   </v-main>

@@ -329,7 +329,7 @@ export function deletecartitem(id) {
   return new Promise(function(resolve) {
     Vue.axios.delete('/api/v1/shopping_cart/' + id).then((response) => {
       if (response.data.result) {
-        alert('刪除成功')
+        // alert('刪除成功')
       }
       resolve(response.data.result)
     })

@@ -25,7 +25,7 @@ const actions = {
   },
   async searchitem({ commit }, srch) {
     let data = await searchitem(srch)
-    if (data.data.length == 0) {
+    if (!data.data) {
       data = []
     }
     await commit('setsrchitems', data)

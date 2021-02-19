@@ -11,7 +11,7 @@
           <v-card-subtitle class="mt-5">{{ item.description }}</v-card-subtitle>
           <div>
             <v-card-text class="text-decoration-line-through">原價:{{ item.suggested_price }}</v-card-text>
-            <v-card-text class="pt-0">特價:{{ item.price }}</v-card-text>
+            <v-card-text class="pt-0 priceoff">特價:{{ item.price }}</v-card-text>
           </div>
           <v-col class="d-flex" cols="3">
             <v-btn outlined tile icon height="56" @click="chcount('decrease')">

@@ -7,7 +7,7 @@
           <h3>Market</h3>
         </v-list-item>
         <v-list-item>
-          <v-textarea auto-grow label="Search" rows="1" v-model="srch" required></v-textarea>
+          <v-text-field @keydown.enter="search()" auto-grow label="搜尋商品" v-model="srch" required></v-text-field>
           <v-icon class="mb-5" @click="search()">mdi-magnify</v-icon>
         </v-list-item>
         <v-list-group v-for="(cate1, index) of categorys" :key="index" no-action>
@@ -57,6 +57,7 @@
               <span>{{ option.name }}</span>
             </v-btn> -->
             <!-- custom options end -->
+
             <!-- menu start -->
             <v-menu
               open-on-hover
@@ -79,7 +80,7 @@
                   <h1>{{ cate2.category2_name }}</h1>
                   <v-list class="mt-5">
                     <v-list-item
-                      class=" menuhover"
+                      class="grayhover"
                       v-for="(cate3, index) in cate2.category3"
                       :key="index"
                       @click="gotocate(cate3.uuid)"
@@ -102,18 +103,17 @@
               </v-btn>
             </v-col>
             <v-col cols="2" class="pt-0">
-              <v-textarea
+              <v-text-field
                 solo
                 flat
                 class="pt-0"
-                auto-grow
                 label="搜尋商品"
-                rows="1"
                 v-model="srch"
                 append-icon="mdi-magnify"
+                @keydown.enter="search()"
                 @click:append="search()"
                 required
-              ></v-textarea>
+              ></v-text-field>
             </v-col>
           </v-row>
         </div>

@@ -8,9 +8,10 @@ import VueAxios from 'vue-axios'
 import store from './store'
 import cookie from './api/cookie'
 import '../public/css/global.scss'
+import animated from 'animate.css'
 
 Vue.config.productionTip = false
-Vue.use(VueAxios, axios)
+Vue.use(VueAxios, axios, animated)
 
 axios.interceptors.request.use(
   (config) => {

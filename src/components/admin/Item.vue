@@ -99,11 +99,6 @@
           商品詳情:
           <v-textarea filled auto-grow v-model="description"></v-textarea>
         </v-col>
-        <!-- <v-col>
-          <v-radio-group v-model="status" row>
-            <v-radio v-for="active in allstatus" :key="active.id" :value="active.id" :label="active.name"></v-radio>
-          </v-radio-group>
-        </v-col> -->
         <v-col>
           圖片:
           <div v-if="image != null">
@@ -185,24 +180,25 @@
         <v-btn elevation="2" color="primary" large @click="adddialog = true">新增商品</v-btn>
       </v-col>
     </v-row>
-    <v-row v-show="items.length != 0">
-      <v-list-item class="maxwidthhandle" v-for="(card, a) in items.data" :key="a">
-        <div class="mr-5 d-flex">
-          <v-icon class="mr-2" @click="deleteitem()">mdi-delete</v-icon>
-          <v-icon @click="showdialog(card)">mdi-note</v-icon>
-        </div>
-        <v-list-item-content class="ml-5">
-          <v-list-item-title>{{ card.name }}</v-list-item-title>
-        </v-list-item-content>
-        <v-switch
-          :input-value="card.active == '1' ? true : false"
-          :label="card.active == 2 ? '下架' : '上架'"
-          @click="offself(card)"
-        ></v-switch>
-      </v-list-item>
-      <div class="text-center">
+    <v-row class="mt-5 d-block" v-show="items.length != 0">
+      <v-col cols="12" md="10">
+        <v-list-item v-for="(card, a) in items.data" :key="a">
+          <div class="mr-5 d-flex">
+            <v-icon @click="showdialog(card)">mdi-note</v-icon>
+          </div>
+          <v-list-item-content class="ml-5">
+            <v-list-item-title>{{ card.name }}</v-list-item-title>
+          </v-list-item-content>
+          <v-switch
+            :input-value="card.active == '1' ? true : false"
+            :label="card.active == 2 ? '下架' : '上架'"
+            @click="offself(card)"
+          ></v-switch>
+        </v-list-item>
+      </v-col>
+      <v-col class="text-center mt-5 ">
         <v-pagination v-model="page" :length="items.last_page" v-on:click.native="changepage()"></v-pagination>
-      </div>
+      </v-col>
     </v-row>
     <v-row v-show="items.length == 0">
       無商品
@@ -382,7 +378,6 @@ export default {
         uuid: uuid,
         page: this.page,
       }
-      console.log(param)
       await this.$store.dispatch('items/edititem', param)
     },
   },

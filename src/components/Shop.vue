@@ -9,7 +9,7 @@
               <v-img v-if="card.image != null" height="300px" :src="'//127.0.0.1:8090/storage/' + card.image" />
               <v-card-actions class="white justify-center d-block">
                 <v-card-text class="pt-2 pb-2" block v-text="card.name"></v-card-text>
-                <v-card-text class="pt-2 pb-2 price">特價{{ card.price }}</v-card-text>
+                <v-card-text class="pt-2 pb-2 priceoff">特價{{ card.price }}</v-card-text>
               </v-card-actions>
             </v-card>
           </v-hover>
@@ -30,7 +30,7 @@ export default {
   data: () => ({
     message: '沒有符合條件的商品',
     cateid: '',
-    page: '',
+    page: 1,
   }),
   mounted: function() {
     this.page = this.$store.state.items.page
