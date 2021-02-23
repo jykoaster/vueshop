@@ -5,7 +5,7 @@
       <v-row class="d-block d-md-flex">
         <v-col cols="8" v-show="items.data.length == 0">{{ message }}</v-col>
         <v-col cols="12" md="9">
-          <transition v-enter-active="animate__backOutUp">
+          <transition-group leave-active-class="animate__animated animate__fadeOutLeft">
             <v-card
               class="d-block d-md-flex mb-2"
               v-for="item in items.data"
@@ -23,11 +23,11 @@
               </v-col>
               <v-col cols="12" md="2">
                 <v-card-actions>
-                  <v-btn text tile class="mr-6" @click.stop="ditem(item.id)">刪除</v-btn>
+                  <v-btn text tile class="mr-6 fadeOut" @click.stop="ditem(item.id)">刪除</v-btn>
                 </v-card-actions>
               </v-col>
             </v-card>
-          </transition>
+          </transition-group>
         </v-col>
         <v-col cols="12" md="3">
           <v-card flat tile>

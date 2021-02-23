@@ -9,10 +9,14 @@
         <v-col>
           <v-card-title class="text-h3 font-weight-medium mb-5">{{ item.name }}</v-card-title>
           <v-card-subtitle class="mt-5">{{ item.description }}</v-card-subtitle>
+
           <div>
             <v-card-text class="text-decoration-line-through">原價:{{ item.suggested_price }}</v-card-text>
-            <v-card-text class="pt-0 priceoff">特價:{{ item.price }}</v-card-text>
+            <transition appear appear-to-class="animate__animated animate__bounceInDown">
+              <v-card-text class="pt-0 priceoff">特價:{{ item.price }}</v-card-text>
+            </transition>
           </div>
+
           <v-col class="d-flex" cols="3">
             <v-btn outlined tile icon height="56" @click="chcount('decrease')">
               <v-icon>mdi-chevron-left</v-icon>

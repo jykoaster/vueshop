@@ -3,6 +3,28 @@ $menubordercolor: #e5e5e5;
 $contentcolor: #000000;
 $solidborder: 1px solid;
 $bodybackground: #fff;
+@media only screen and (max-width: 768px) {
+  .animate__animated {
+    /*CSS transitions*/
+    -o-transition-property: none !important;
+    -moz-transition-property: none !important;
+    -ms-transition-property: none !important;
+    -webkit-transition-property: none !important;
+    transition-property: none !important;
+    /*CSS transforms*/
+    -o-transform: none !important;
+    -moz-transform: none !important;
+    -ms-transform: none !important;
+    -webkit-transform: none !important;
+    transform: none !important;
+    /*CSS animations*/
+    -webkit-animation: none !important;
+    -moz-animation: none !important;
+    -o-animation: none !important;
+    -ms-animation: none !important;
+    animation: none !important;
+  }
+}
 @mixin pc {
   @media (min-width: 960px) {
     @content;
@@ -13,6 +35,7 @@ $bodybackground: #fff;
     @content;
   }
 }
+
 .solidborder {
   border: $solidborder;
 }

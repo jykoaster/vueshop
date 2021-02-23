@@ -11,7 +11,7 @@
       <span class="text-h4 font-weight-bold">{{ area2.subtitle2 }}</span>
     </div>
     <v-row id="area3" class="ma-0">
-      <v-card v-for="(i, index) in area3" :key="index" class="elevation-0" tile>
+      <v-card v-for="(i, index) in area3" :key="index" class="elevation-0 animate__animated" data-aos="flip-left" tile>
         <v-hover v-slot="{ hover }">
           <v-img max-height="770px" :src="require(`../assets/images/${i.img}.png`)">
             <div v-if="hover" class=" d-flex  img-hover-style">
@@ -24,7 +24,7 @@
         </v-card-title>
       </v-card>
     </v-row>
-    <v-row id="area4" class="ma-0">
+    <v-row id="area4" class="ma-0 animate__animated" data-aos="flip-up">
       <v-card class="elevation-0" tile>
         <v-hover v-slot="{ hover }">
           <v-img max-height="770px" :src="require(`../assets/images/${area4.img}.png`)">

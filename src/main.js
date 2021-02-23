@@ -7,11 +7,13 @@ import axios from 'axios'
 import VueAxios from 'vue-axios'
 import store from './store'
 import cookie from './api/cookie'
+import AOS from 'aos'
+import 'aos/dist/aos.css'
 import '../public/css/global.scss'
-import animated from 'animate.css'
+import 'animate.css'
 
 Vue.config.productionTip = false
-Vue.use(VueAxios, axios, animated)
+Vue.use(VueAxios, axios)
 
 axios.interceptors.request.use(
   (config) => {
@@ -75,5 +77,19 @@ new Vue({
   template: '<App/>',
   vuetify,
   store,
+  created() {
+    AOS.init({
+      useClassNames: true,
+      initClassName: false,
+      animatedClassName: 'animate__animated',
+      offset: 120, // offset (in px) from the original trigger point
+      delay: 0, // values from 0 to 3000, with step 50ms
+      duration: 400, // values from 0 to 3000, with step 50ms
+      easing: 'ease', // default easing for AOS animations
+      once: false, // whether animation should happen only once - while scrolling down
+      mirror: false, // whether elements should animate out while scrolling past them
+      anchorPlacement: 'bottom-center', // defines which position of the element regarding to window should trigger the animation
+    })
+  },
   render: (h) => h(App),
 }).$mount('#app')
