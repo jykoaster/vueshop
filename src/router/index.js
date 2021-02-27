@@ -12,7 +12,7 @@ import Setitem from '@/components/admin/Item'
 import Setuser from '@/components/admin/User'
 import Register from '@/components/Register'
 import notfound from '@/components/404'
-import { logout } from '@/api/request'
+import { logout, member } from '@/api/request'
 Vue.use(Router)
 
 const router = new Router({
@@ -74,9 +74,10 @@ const router = new Router({
     {
       path: '/admin',
       component: Admin,
-
+      meta: {
+        super: true,
+      },
       redirect: '/admin/category',
-
       children: [
         {
           path: 'category',
@@ -84,6 +85,7 @@ const router = new Router({
           component: Setcategory,
           meta: {
             title: '分類管理',
+            super: true,
           },
         },
         {
@@ -92,6 +94,7 @@ const router = new Router({
           component: Setitem,
           meta: {
             title: '商品管理',
+            super: true,
           },
         },
         {
@@ -100,6 +103,7 @@ const router = new Router({
           component: Setuser,
           meta: {
             title: '會員管理',
+            super: true,
           },
         },
       ],
@@ -114,9 +118,15 @@ const router = new Router({
     },
   ],
 })
-router.beforeEach((to, from, next) => {
+router.beforeEach(async (to, from, next) => {
   if (to.meta.title) {
     document.title = to.meta.title
+  }
+  if (to.meta.super) {
+    let status = await member()
+    if (status.group_id != 1) {
+      next({ name: 'home' })
+    }
   }
   if (to.path == '/logout') {
     logout()

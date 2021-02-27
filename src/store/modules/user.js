@@ -19,6 +19,7 @@ const state = () => ({
   address: '',
   phone: '',
   token: '',
+  groupid: '',
   alluser: [],
   allgroup: [],
   alllevel: [],
@@ -89,8 +90,9 @@ const mutations = {
     state.alllevel = level
     state.allstatus = status
   },
-  SET_login(state, token) {
+  SET_login(state, { token, groupid }) {
     state.token = token
+    state.groupid = groupid
   },
   SET_data(state, data) {
     state.account = data.account
@@ -108,6 +110,7 @@ const mutations = {
     state.phone = ''
     state.address = ''
     state.token = ''
+    state.groupid = ''
     state.alluser = []
     state.allgroup = []
     state.alllevel = []

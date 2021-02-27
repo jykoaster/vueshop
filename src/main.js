@@ -32,8 +32,13 @@ axios.interceptors.response.use(
   (response) => {
     if (response.data && response.status == 200 && response.config.url == '/api/v1/login') {
       let jwttoken = response.data.result.token
+      let groupid = response.data.result.user.group_id
       cookie.settoken(jwttoken)
-      store.commit('user/SET_login', jwttoken)
+      let param = {
+        token: jwttoken,
+        groupid: groupid,
+      }
+      store.commit('user/SET_login', param)
       router.replace('/')
     }
     if (response.data && response.status == 200 && response.config.url == '/api/v1/logout') {

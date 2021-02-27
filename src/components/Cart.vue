@@ -3,7 +3,7 @@
     <v-container>
       <h1>購物車</h1>
       <v-row class="d-block d-md-flex">
-        <v-col cols="8" v-show="items.data.length == 0">{{ message }}</v-col>
+        <v-col cols="8" v-if="items.data.length == 0">{{ message }}</v-col>
         <v-col cols="12" md="9">
           <transition-group leave-active-class="animate__animated animate__fadeOutLeft">
             <v-card

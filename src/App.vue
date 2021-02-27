@@ -171,6 +171,11 @@ export default {
         { name: '購物車', path: '/cart', icon: 'mdi-cart' },
       ],
       [
+        { name: '會員詳情', path: '/member', icon: 'mdi-account' },
+        { name: '登出', path: '/logout', icon: 'mdi-logout' },
+        { name: '購物車', path: '/cart', icon: 'mdi-cart' },
+      ],
+      [
         { name: '管理後臺', path: '/admin', icon: ' mdi-account-circle' },
         { name: '會員詳情', path: '/member', icon: 'mdi-account' },
         { name: '登出', path: '/logout', icon: 'mdi-logout' },
@@ -210,6 +215,8 @@ export default {
     useroptions() {
       if (this.$store.state.user.token == '') {
         return this.$data.allusertags[0]
+      } else if (this.$store.state.user.groupid == '1') {
+        return this.$data.allusertags[2]
       } else {
         return this.$data.allusertags[1]
       }
