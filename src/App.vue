@@ -22,7 +22,7 @@
                 <v-list-item-title v-text="cate2.category2_name"></v-list-item-title>
               </v-list-item-content>
             </template>
-            <v-list-item v-for="(cate3, index) in cate2.category3" :key="index">
+            <v-list-item class="grayhover" v-for="(cate3, index) in cate2.category3" :key="index">
               <v-list-item-content @click="gotocate(cate3.uuid)">
                 <v-list-item-title v-text="cate3.category3_name"></v-list-item-title>
               </v-list-item-content>
