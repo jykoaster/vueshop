@@ -102,7 +102,7 @@
         <v-col>
           圖片:
           <div v-if="image != null">
-            <v-img :src="'//127.0.0.1:8090/storage/' + image" />
+            <v-img :src="'ec2-18-216-206-131.us-east-2.compute.amazonaws.com:8090/storage/' + image" />
           </div>
           <div v-if="image == null">
             <v-img :src="require(`../../assets/images/defaultitem.png`)" />
