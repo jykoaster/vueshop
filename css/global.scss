@@ -1,0 +1,220 @@
+$pricecolor: #ee4d2d;
+$menubordercolor: #e5e5e5;
+$contentcolor: #000000;
+$solidborder: 1px solid;
+$bodybackground: #fff;
+@media only screen and (max-width: 768px) {
+  .animate__animated {
+    /*CSS transitions*/
+    -o-transition-property: none !important;
+    -moz-transition-property: none !important;
+    -ms-transition-property: none !important;
+    -webkit-transition-property: none !important;
+    transition-property: none !important;
+    /*CSS transforms*/
+    -o-transform: none !important;
+    -moz-transform: none !important;
+    -ms-transform: none !important;
+    -webkit-transform: none !important;
+    transform: none !important;
+    /*CSS animations*/
+    -webkit-animation: none !important;
+    -moz-animation: none !important;
+    -o-animation: none !important;
+    -ms-animation: none !important;
+    animation: none !important;
+  }
+}
+@mixin pc {
+  @media (min-width: 960px) {
+    @content;
+  }
+}
+@mixin mobile {
+  @media (max-width: 960px) {
+    @content;
+  }
+}
+
+.solidborder {
+  border: $solidborder;
+}
+.priceoff {
+  color: $pricecolor;
+}
+
+.formborder {
+  @extend .solidborder;
+  border-radius: 5px;
+  border-color: rgba(0, 0, 0, 0.26);
+}
+.dialoginput {
+  max-height: 50px;
+  border: $solidborder;
+  text-align: center;
+}
+.img-hover-style {
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.5);
+  width: 100%;
+  height: 100%;
+}
+.show-btns {
+  border: 2px solid #ffffff;
+  color: #ffffff !important;
+  &:hover {
+    background-color: #ffffff;
+    color: #000000 !important;
+  }
+}
+.grayhover {
+  &:hover {
+    background: rgba(112, 112, 112, 0.26);
+  }
+}
+.blackbtn {
+  border: $solidborder #000000;
+  background-color: #000000;
+  color: #ffffff;
+  &:hover {
+    border: $solidborder;
+    background-color: #ffffff;
+    color: #000000;
+  }
+}
+.titlecursor {
+  cursor: pointer;
+}
+.roundimg {
+  border-radius: 50%;
+  &:hover {
+    @extend .solidborder;
+  }
+}
+body {
+  background-color: $bodybackground;
+}
+
+#nav-drawer {
+  z-index: 3;
+}
+#navbar {
+  position: fixed;
+  top: 0px;
+  width: 100%;
+  z-index: 2;
+  background-color: $bodybackground;
+  border-bottom: $solidborder $menubordercolor;
+  @include pc {
+    height: 123px;
+  }
+  @include mobile {
+    height: 70px;
+  }
+}
+#wrap-nav {
+  @include pc {
+    height: 123px;
+  }
+  @include mobile {
+    height: 70px;
+  }
+}
+
+#area2 {
+  background-color: #e0e0e0;
+  overflow: hidden;
+  height: 300px;
+  div {
+    margin-top: 5rem;
+    margin-bottom: 2rem;
+  }
+  span {
+    @include pc {
+      margin: 5rem 1rem 5rem 1rem;
+    }
+    @include mobile {
+      display: block;
+    }
+  }
+}
+
+#area3 {
+  .v-card {
+    border-radius: 0px;
+
+    @include pc {
+      width: 50%;
+    }
+    @include mobile {
+      width: 100%;
+    }
+  }
+}
+
+#area4 {
+  .v-card {
+    width: 100%;
+  }
+}
+
+#menulist {
+  border-bottom: $solidborder $menubordercolor;
+  .v-list-item {
+    position: static;
+  }
+}
+
+#cateadmin {
+  .v-icon {
+    margin-right: 1rem;
+  }
+}
+
+#shoppage {
+  .v-card {
+    @extend .solidborder;
+    border-color: $menubordercolor !important;
+  }
+}
+#goodpage {
+  input {
+    @extend .solidborder;
+    text-align: center;
+  }
+  .v-btn {
+    @extend .blackbtn;
+  }
+}
+#cart {
+  .v-card {
+    @extend .solidborder;
+    text-align: center;
+  }
+  .v-btn {
+    @extend .blackbtn;
+  }
+}
+
+#itemevent {
+  .v-btn {
+    @include pc {
+      flex: auto;
+    }
+    @include mobile {
+      min-width: 100% !important;
+    }
+  }
+}
+
+#setitempage {
+  .v-select {
+    @include pc {
+      margin-right: 2rem;
+    }
+    @include mobile {
+      margin: 0 1rem 0 1rem;
+    }
+  }
+}
