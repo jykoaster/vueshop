@@ -3,9 +3,7 @@
     <h1>商品設定</h1>
     <v-dialog v-model="adddialog" persistent width="500">
       <v-card>
-        <v-card-title class="headline grey lighten-2">
-          新增商品
-        </v-card-title>
+        <v-card-title class="headline grey lighten-2"> 新增商品 </v-card-title>
         <v-col>
           商品名稱:
           <v-text-field class="dialoginput" flat dense v-model="name" label="姓名" solo></v-text-field>
@@ -65,20 +63,14 @@
         <v-divider></v-divider>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="primary" text @click="additem">
-            送出
-          </v-btn>
-          <v-btn color="error" text @click="cleardata">
-            取消
-          </v-btn>
+          <v-btn color="primary" text @click="additem"> 送出 </v-btn>
+          <v-btn color="error" text @click="cleardata"> 取消 </v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
     <v-dialog v-model="editdialog" persistent width="500">
       <v-card>
-        <v-card-title class="headline grey lighten-2">
-          編輯商品
-        </v-card-title>
+        <v-card-title class="headline grey lighten-2"> 編輯商品 </v-card-title>
         <v-col>
           商品名稱:
           <v-text-field class="dialoginput" flat dense v-model="name" :label="name" solo></v-text-field>
@@ -102,7 +94,7 @@
         <v-col>
           圖片:
           <div v-if="image != null">
-            <v-img :src="'ec2-18-216-206-131.us-east-2.compute.amazonaws.com:8090/storage/' + image" />
+            <v-img :src="'//18.216.206.131:8090/storage/' + image" />
           </div>
           <div v-if="image == null">
             <v-img :src="require(`../../assets/images/defaultitem.png`)" />
@@ -139,16 +131,12 @@
         <v-divider></v-divider>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="primary" text @click="edititem">
-            送出
-          </v-btn>
-          <v-btn color="error" text @click="cleardata">
-            取消
-          </v-btn>
+          <v-btn color="primary" text @click="edititem"> 送出 </v-btn>
+          <v-btn color="error" text @click="cleardata"> 取消 </v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
-    <v-row class="justify-center  justify-md-start">
+    <v-row class="justify-center justify-md-start">
       <v-col class="d-md-flex" md="8" cols="12">
         <v-select
           v-on:click="clear(1)"
@@ -196,13 +184,11 @@
           ></v-switch>
         </v-list-item>
       </v-col>
-      <v-col class="text-center mt-5 ">
+      <v-col class="text-center mt-5">
         <v-pagination v-model="page" :length="items.last_page" v-on:click.native="changepage()"></v-pagination>
       </v-col>
     </v-row>
-    <v-row v-show="items.length == 0">
-      無商品
-    </v-row>
+    <v-row v-show="items.length == 0"> 無商品 </v-row>
   </v-container>
 </template>
 <script>
@@ -228,7 +214,7 @@ export default {
       { id: 2, name: '下架' },
     ],
   }),
-  mounted: function() {
+  mounted: function () {
     this.$store.dispatch('items/clear')
   },
   computed: {

@@ -1,9 +1,11 @@
 module.exports = {
   transpileDependencies: ['vuetify'],
   devServer: {
+    port: 80,
+    disableHostCheck: true,
     proxy: {
       '/api/v1': {
-        target: 'http://ec2-18-216-206-131.us-east-2.compute.amazonaws.com:8090',
+        target: 'http://18.216.206.131:8090/',
         ws: true,
         changeOrigin: true,
       },

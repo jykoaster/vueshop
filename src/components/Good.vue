@@ -3,7 +3,7 @@
     <div class="text-h6">{{ route }}</div>
     <v-row class="justify-center">
       <v-col class="ma-md-10" md="4" cols="12">
-        <v-img height="100%" :src="'ec2-18-216-206-131.us-east-2.compute.amazonaws.com:8090/storage/' + item.image" />
+        <v-img height="100%" :src="'//18.216.206.131:8090/storage/' + item.image" />
       </v-col>
       <v-col class="ma-md-10">
         <v-col>
@@ -38,7 +38,7 @@
             @click="changeimg(img)"
           />
         </v-col>
-        <v-col class="mt-10  d-md-flex" md="8" cols="12" id="itemevent">
+        <v-col class="mt-10 d-md-flex" md="8" cols="12" id="itemevent">
           <v-btn text outlined tile class="mr-5 mb-5" @click="addcart(item.uuid)">加入購物車</v-btn>
           <v-btn text outlined tile @click="back">立即購買</v-btn>
         </v-col>
