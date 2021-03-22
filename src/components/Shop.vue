@@ -8,7 +8,7 @@
               <v-img v-if="card.image == null" height="300px" :src="require(`../assets/images/defaultitem.png`)" />
               <v-img v-if="card.image != null" height="300px" :src="'//18.216.206.131:8090/storage/' + card.image" />
               <v-card-actions class="white justify-center d-block">
-                <v-card-text class="pt-2 pb-2" block v-text="card.name"></v-card-text>
+                <v-card-text class="pt-2 pb-2 hideword" block v-text="card.name"></v-card-text>
                 <v-card-text class="pt-2 pb-2 priceoff">特價{{ card.price }}</v-card-text>
               </v-card-actions>
             </v-card>
@@ -32,7 +32,7 @@ export default {
     cateid: '',
     page: 1,
   }),
-  mounted: function () {
+  mounted: function() {
     this.page = this.$store.state.items.page
   },
   computed: {
