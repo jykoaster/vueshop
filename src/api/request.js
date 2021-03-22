@@ -21,7 +21,7 @@ export function login(param) {
     })
 }
 export function captcha() {
-  return new Promise(function(resolve) {
+  return new Promise(function (resolve) {
     Vue.axios.get('/api/v1/captcha').then((response) => {
       resolve(response.data)
     })
@@ -29,7 +29,7 @@ export function captcha() {
 }
 
 export function member() {
-  return new Promise(function(resolve) {
+  return new Promise(function (resolve) {
     Vue.axios.get('/api/v1/auth').then((response) => {
       resolve(response.data.result)
     })
@@ -42,7 +42,7 @@ export function changedata(name, phone, email) {
     phone: phone,
     email: email,
   })
-  return new Promise(function(resolve) {
+  return new Promise(function (resolve) {
     Vue.axios
       .put('/api/v1/user_information', data)
       .then((response) => {
@@ -58,20 +58,20 @@ export function changedata(name, phone, email) {
 }
 
 export function register(param) {
-  return new Promise(function() {
+  return new Promise(function () {
     Vue.axios
       .post('/api/v1/register', param)
       .then(() => {
         alert('註冊成功')
       })
-      .catch(() => {
-        alert('註冊失敗')
+      .catch((error) => {
+        alert(error.error)
       })
   })
 }
 
 export function getallusers() {
-  return new Promise(function(resolve) {
+  return new Promise(function (resolve) {
     Vue.axios.get('api/v1/user').then((response) => {
       resolve(response.data.result)
     })
@@ -86,7 +86,7 @@ export function adduser(account, name, email, group, level, phone) {
   data.append('group_id', group)
   data.append('phone', phone)
   data.append('level_id', level)
-  return new Promise(function(resolve) {
+  return new Promise(function (resolve) {
     Vue.axios
       .post('api/v1/user', data)
       .then((response) => {
@@ -109,7 +109,7 @@ export function edituser(account, name, email, group, level, phone, status, uuid
     phone: phone,
     active: status,
   })
-  return new Promise(function(resolve) {
+  return new Promise(function (resolve) {
     Vue.axios
       .put('api/v1/user/' + uuid, data)
       .then((response) => {
@@ -130,7 +130,7 @@ export function resetpassword(group, level, phone, password, uuid) {
     password: password,
     password_confirmation: password,
   })
-  return new Promise(function(resolve) {
+  return new Promise(function (resolve) {
     Vue.axios
       .put('api/v1/user/' + uuid, data)
       .then((response) => {
@@ -143,7 +143,7 @@ export function resetpassword(group, level, phone, password, uuid) {
   })
 }
 export function deleteuser(uuid) {
-  return new Promise(function(resolve) {
+  return new Promise(function (resolve) {
     Vue.axios
       .delete('api/v1/user/' + uuid)
       .then((response) => {
@@ -157,17 +157,17 @@ export function deleteuser(uuid) {
 }
 
 export function useradminformdata() {
-  const group = new Promise(function(resolve) {
+  const group = new Promise(function (resolve) {
     Vue.axios.get('api/v1/dropdown/group?all=hide').then((response) => {
       resolve(response.data.result)
     })
   })
-  const level = new Promise(function(resolve) {
+  const level = new Promise(function (resolve) {
     Vue.axios.get('api/v1/dropdown/level?all=hide').then((response) => {
       resolve(response.data.result)
     })
   })
-  const status = new Promise(function(resolve) {
+  const status = new Promise(function (resolve) {
     Vue.axios.get('api/v1/dropdown/active?all=hide').then((response) => {
       resolve(response.data.result)
     })
@@ -183,14 +183,14 @@ export function useradminformdata() {
 }
 
 export function getallcategorys() {
-  return new Promise(function(resolve) {
+  return new Promise(function (resolve) {
     Vue.axios.get('/api/v1/category').then((response) => {
       resolve(response.data.result)
     })
   })
 }
 export function getproducts(uuid, page, status) {
-  return new Promise(function(resolve) {
+  return new Promise(function (resolve) {
     Vue.axios.get('/api/v1/product/' + status + '/' + uuid, { params: { page: page } }).then((response) => {
       resolve(response.data.result)
     })
@@ -198,7 +198,7 @@ export function getproducts(uuid, page, status) {
 }
 
 export function searchitem(srch) {
-  return new Promise(function(resolve) {
+  return new Promise(function (resolve) {
     Vue.axios.get('/api/v1/product/search?q=' + srch).then((response) => {
       resolve(response.data.result)
     })
@@ -206,7 +206,7 @@ export function searchitem(srch) {
 }
 
 export function getitemsbyurl(url) {
-  return new Promise(function(resolve) {
+  return new Promise(function (resolve) {
     Vue.axios.get(url).then((response) => {
       resolve(response.data.result)
     })
@@ -214,7 +214,7 @@ export function getitemsbyurl(url) {
 }
 
 export function getcategory1() {
-  return new Promise(function(resolve) {
+  return new Promise(function (resolve) {
     Vue.axios.get('/api/v1/category1').then((response) => {
       resolve(response.data.result)
     })
@@ -222,7 +222,7 @@ export function getcategory1() {
 }
 
 export function getitemdetail(uuid) {
-  return new Promise(function(resolve) {
+  return new Promise(function (resolve) {
     Vue.axios.get('/api/v1/product/detail/' + uuid).then((response) => {
       resolve(response.data.result)
     })
@@ -230,7 +230,7 @@ export function getitemdetail(uuid) {
 }
 
 export function deletecategory(level, id) {
-  return new Promise(function(resolve) {
+  return new Promise(function (resolve) {
     Vue.axios
       .delete('/api/v1/' + level + '/' + id)
       .then((response) => {
@@ -251,7 +251,7 @@ export function editcategory(level, id, name, upperid, paramid, paramname) {
     [paramname]: name,
     [paramid]: upperid,
   })
-  return new Promise(function(resolve) {
+  return new Promise(function (resolve) {
     Vue.axios
       .put('/api/v1/' + level + '/' + id, data)
       .then((response) => {
@@ -271,7 +271,7 @@ export function addcategory(level, name, upperid, paramid, paramname) {
   let data = new FormData()
   data.append(paramid, upperid)
   data.append(paramname, name)
-  return new Promise(function(resolve) {
+  return new Promise(function (resolve) {
     Vue.axios
       .post('/api/v1/' + level, data)
       .then((response) => {
@@ -288,7 +288,7 @@ export function addcategory(level, name, upperid, paramid, paramname) {
 }
 
 export function getlevelcate(level) {
-  return new Promise(function(resolve) {
+  return new Promise(function (resolve) {
     Vue.axios
       .get('/api/v1/category' + level)
       .then((response) => {
@@ -302,7 +302,7 @@ export function getlevelcate(level) {
 }
 
 export function getcartitems() {
-  return new Promise(function(resolve) {
+  return new Promise(function (resolve) {
     Vue.axios.get('/api/v1/shopping_cart').then((response) => {
       resolve(response.data.result)
     })
@@ -313,7 +313,7 @@ export function addcartitem(param) {
   let data = new FormData()
   data.append('uuid', param.id)
   data.append('number', param.count)
-  return new Promise(function(resolve) {
+  return new Promise(function (resolve) {
     Vue.axios.post('/api/v1/shopping_cart', data).then((response) => {
       if (response.data.result) {
         alert('加入成功')
@@ -326,7 +326,7 @@ export function addcartitem(param) {
 }
 
 export function deletecartitem(id) {
-  return new Promise(function(resolve) {
+  return new Promise(function (resolve) {
     Vue.axios.delete('/api/v1/shopping_cart/' + id).then((response) => {
       if (response.data.result) {
         // alert('刪除成功')
@@ -346,7 +346,7 @@ export function additem(cateid, name, description, suggest, price, residual, sta
   data.append('price', price)
   data.append('residual', residual)
   data.append('active', status)
-  return new Promise(function(resolve) {
+  return new Promise(function (resolve) {
     Vue.axios.post('/api/v1/product', data).then((response) => {
       if (response.data.result) {
         alert('添加商品成功')
@@ -371,7 +371,7 @@ export function edititem(cateid, name, description, suggest, price, residual, st
     imgobj.append('image', image, image.name)
   }
 
-  return new Promise(function(resolve) {
+  return new Promise(function (resolve) {
     Vue.axios.put('api/v1/product/' + uuid, data).then((response) => {
       resolve(response.data.result)
     })
