@@ -6,6 +6,7 @@ const state = () => ({
   detail: {},
   cateid: '',
   page: 1,
+  imgurl: process.env.VUE_APP_IMGURL,
 })
 
 const actions = {

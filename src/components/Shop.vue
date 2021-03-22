@@ -6,7 +6,7 @@
           <v-hover v-slot:default="{ hover }">
             <v-card flat tile color="black" :elevation="hover ? 5 : 0" @click="godetail(card.uuid)">
               <v-img v-if="card.image == null" height="300px" :src="require(`../assets/images/defaultitem.png`)" />
-              <v-img v-if="card.image != null" height="300px" :src="'//18.216.206.131:8090/storage/' + card.image" />
+              <v-img v-if="card.image != null" height="300px" :src="imgurl + card.image" />
               <v-card-actions class="white justify-center d-block">
                 <v-card-text class="pt-2 pb-2 hideword" block v-text="card.name"></v-card-text>
                 <v-card-text class="pt-2 pb-2 priceoff">特價{{ card.price }}</v-card-text>
@@ -31,9 +31,11 @@ export default {
     message: '沒有符合條件的商品',
     cateid: '',
     page: 1,
+    imgurl: '',
   }),
   mounted: function() {
     this.page = this.$store.state.items.page
+    this.imgurl = this.$store.state.items.imgurl
   },
   computed: {
     ...mapState({

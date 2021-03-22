@@ -3,7 +3,7 @@
     <div class="text-h6">{{ route }}</div>
     <v-row class="justify-center">
       <v-col class="ma-md-10" md="4" cols="12">
-        <v-img height="100%" :src="'//18.216.206.131:8090/storage/' + item.image" />
+        <v-img height="100%" :src="imgurl + item.image" />
       </v-col>
       <v-col class="ma-md-10">
         <v-col>
@@ -55,7 +55,11 @@ export default {
     name: null,
     count: 1,
     route: '',
+    imgurl: '',
   }),
+  mounted: function() {
+    this.imgurl = this.$store.state.items.imgurl
+  },
   methods: {
     back() {
       this.$router.go(-1)

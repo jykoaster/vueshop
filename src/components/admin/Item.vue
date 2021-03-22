@@ -94,7 +94,7 @@
         <v-col>
           圖片:
           <div v-if="image != null">
-            <v-img :src="'//18.216.206.131:8090/storage/' + image" />
+            <v-img :src="imgurl + image" />
           </div>
           <div v-if="image == null">
             <v-img :src="require(`../../assets/images/defaultitem.png`)" />
@@ -213,9 +213,11 @@ export default {
       { id: 1, name: '上架' },
       { id: 2, name: '下架' },
     ],
+    imgurl: '',
   }),
-  mounted: function () {
+  mounted: function() {
     this.$store.dispatch('items/clear')
+    this.imgurl = this.$store.state.items.imgurl
   },
   computed: {
     ...mapState({
