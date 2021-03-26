@@ -61,7 +61,7 @@ axios.interceptors.response.use(
           store.commit('cart/LOGOUT')
           store.commit('items/clearall')
           cookie.removetoken()
-          store.commit('user/SET_login', '')
+          // store.commit('user/SET_login', '')
 
           if (error.response.config.url != '/api/v1/login') {
             alert('Please Login!')
