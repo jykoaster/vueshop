@@ -208,6 +208,7 @@ export default {
         status: 1,
       }
       await this.$store.dispatch('items/getitems', param)
+      this.drawer = false
       this.$router.push('/shop').catch(() => {})
     },
   },
